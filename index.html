@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhāva, Anubhāva & the Somatic Lexicon — A Scholarly White Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --ink-soft: #2e2520;
+    --parchment: #f7f2e8;
+    --parchment-dark: #ede4d0;
+    --parchment-deeper: #e0d4bc;
+    --rust: #8b3a2a;
+    --rust-light: #c05a42;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --gold-pale: #f0d980;
+    --teal-deep: #1a4a4a;
+    --teal: #2a6060;
+    --teal-light: #3a8080;
+    --violet-deep: #2d1b4e;
+    --violet: #4a2d7a;
+    --violet-light: #6b4fa0;
+    --slate: #4a4640;
+    --slate-light: #7a7268;
+    --rule: #c8b89a;
+    --accent-bar: #8b3a2a;
+    --font-display: 'Cinzel', serif;
+    --font-body: 'EB Garamond', serif;
+    --font-deva: 'Noto Serif Devanagari', serif;
+    --font-mono: 'Source Code Pro', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── TOC SIDEBAR ── */
+  #toc-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--ink);
+    color: var(--parchment-dark);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 24px 0 40px;
+    transition: transform 0.3s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rust) var(--ink);
+  }
+  #toc-sidebar::-webkit-scrollbar { width: 4px; }
+  #toc-sidebar::-webkit-scrollbar-track { background: var(--ink); }
+  #toc-sidebar::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 2px; }
+
+  #toc-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+  }
+
+  .toc-brand {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 16px;
+  }
+  .toc-brand h2 {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .toc-brand p {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+
+  .toc-section-label {
+    padding: 10px 20px 4px;
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--rust-light);
+    text-transform: uppercase;
+  }
+
+  #toc-sidebar a {
+    display: block;
+    padding: 5px 20px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  #toc-sidebar a:hover,
+  #toc-sidebar a.active {
+    color: var(--gold-pale);
+    border-left-color: var(--gold-light);
+    background: rgba(255,255,255,0.04);
+  }
+  #toc-sidebar a.sub { padding-left: 32px; font-size: 11.5px; opacity: 0.8; }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: 280px;
+    min-height: 100vh;
+  }
+
+  /* ── COVER ── */
+  #cover {
+    background: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 80px 80px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  #cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(139,58,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 20%, rgba(74,45,122,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-mandala {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 340px;
+    height: 340px;
+    opacity: 0.07;
+  }
+  .cover-eyebrow {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--rust-light);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cover-rule {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 32px;
+  }
+  #cover h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 600;
+    color: var(--parchment);
+    line-height: 1.15;
+    max-width: 600px;
+    margin-bottom: 8px;
+  }
+  #cover h1 em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+  .cover-subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 16px;
+    max-width: 520px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .cover-deva {
+    font-family: var(--font-deva);
+    font-size: 22px;
+    color: var(--gold-light);
+    margin-top: 20px;
+    margin-bottom: 36px;
+    opacity: 0.85;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .cover-meta-item label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: var(--rust-light);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+  }
+  .cover-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 36px;
+  }
+  .kw-tag {
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(184,134,11,0.35);
+    color: var(--gold-light);
+    border-radius: 2px;
+  }
+
+  /* ── PAGE SECTIONS ── */
+  .page-section {
+    padding: 72px 80px 72px 100px;
+    border-bottom: 1px solid var(--rule);
+    max-width: 900px;
+  }
+  .page-section:last-child { border-bottom: none; }
+
+  /* alt background sections */
+  .section-alt { background: var(--parchment-dark); }
+  .section-deep {
+    background: var(--ink);
+    color: var(--parchment);
+    max-width: 100%;
+    padding: 72px 80px 72px 100px;
+  }
+  .section-teal {
+    background: var(--teal-deep);
+    color: var(--parchment);
+    max-width: 100%;
+    padding: 72px 80px 72px 100px;
+  }
+  .section-violet {
+    background: var(--violet-deep);
+    color: var(--parchment);
+    max-width: 100%;
+    padding: 72px 80px 72px 100px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-deep .section-eyebrow,
+  .section-teal .section-eyebrow,
+  .section-violet .section-eyebrow { color: var(--gold-light); }
+
+  h2.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 600;
+    color: var(--rust);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .section-deep h2.section-title { color: var(--gold-pale); }
+  .section-teal h2.section-title { color: var(--gold-pale); }
+  .section-violet h2.section-title { color: var(--gold-pale); }
+
+  h2.section-title .deva-inline {
+    display: block;
+    font-family: var(--font-deva);
+    font-size: 0.7em;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .title-rule {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rust), transparent);
+    margin: 16px 0 28px;
+  }
+  .section-deep .title-rule { background: linear-gradient(90deg, var(--gold), transparent); }
+  .section-teal .title-rule { background: linear-gradient(90deg, var(--gold), transparent); }
+  .section-violet .title-rule { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  h3.sub-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--rust);
+    letter-spacing: 0.05em;
+    margin: 36px 0 12px;
+    text-transform: uppercase;
+  }
+  .section-deep h3.sub-title { color: var(--gold-light); }
+  .section-teal h3.sub-title { color: var(--gold-light); }
+  .section-violet h3.sub-title { color: var(--gold-light); }
+
+  h4.sub-sub-title {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--teal-deep);
+    margin: 28px 0 10px;
+  }
+  .section-deep h4.sub-sub-title { color: var(--gold-pale); }
+  .section-teal h4.sub-sub-title { color: var(--teal-light); color: #a0d4d4; }
+  .section-violet h4.sub-sub-title { color: #c0a8e0; }
+
+  p { margin-bottom: 1em; }
+  p:last-child { margin-bottom: 0; }
+
+  .iast { font-style: italic; }
+  .deva { font-family: var(--font-deva); font-size: 1.05em; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 36px 0;
+    padding: 24px 32px;
+    border-left: 4px solid var(--rust);
+    background: rgba(139,58,42,0.06);
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .section-deep .pull-quote {
+    border-left-color: var(--gold);
+    background: rgba(212,160,23,0.08);
+    color: var(--parchment-dark);
+  }
+  .section-teal .pull-quote {
+    border-left-color: var(--gold);
+    background: rgba(255,255,255,0.05);
+    color: var(--parchment-dark);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    font-style: normal;
+    font-family: var(--font-display);
+    color: var(--rust-light);
+  }
+  .section-deep .pull-quote cite,
+  .section-teal .pull-quote cite { color: var(--gold-light); }
+
+  /* ── STRUCTURED ENTRY CARD ── */
+  .entry-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--rust);
+    padding: 28px 32px;
+    margin: 24px 0;
+    border-radius: 0 0 4px 4px;
+  }
+  .entry-card.teal-accent { border-top-color: var(--teal); }
+  .entry-card.violet-accent { border-top-color: var(--violet); }
+  .entry-card.gold-accent { border-top-color: var(--gold); }
+
+  .section-teal .entry-card,
+  .section-violet .entry-card,
+  .section-deep .entry-card {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+    color: var(--parchment-dark);
+  }
+
+  .entry-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .entry-num {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--rust-light);
+    flex-shrink: 0;
+  }
+  .entry-name-deva {
+    font-family: var(--font-deva);
+    font-size: 1.15em;
+    color: var(--gold);
+  }
+  .entry-name-iast {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1em;
+    color: var(--slate);
+  }
+  .section-deep .entry-name-iast,
+  .section-teal .entry-name-iast,
+  .section-violet .entry-name-iast { color: rgba(255,255,255,0.7); }
+
+  .entry-meaning {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--slate-light);
+    text-transform: uppercase;
+  }
+
+  .entry-body { font-size: 15.5px; line-height: 1.7; }
+  .entry-body p { margin-bottom: 0.6em; }
+
+  .entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .tag {
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .tag-neuro { background: rgba(42,96,96,0.12); color: var(--teal); border: 1px solid rgba(42,96,96,0.25); }
+  .tag-tantra { background: rgba(74,45,122,0.12); color: var(--violet); border: 1px solid rgba(74,45,122,0.25); }
+  .tag-yoga { background: rgba(139,58,42,0.10); color: var(--rust); border: 1px solid rgba(139,58,42,0.25); }
+  .tag-mudra { background: rgba(184,134,11,0.12); color: var(--gold); border: 1px solid rgba(184,134,11,0.3); }
+  .tag-karana { background: rgba(26,26,10,0.08); color: var(--slate); border: 1px solid rgba(26,26,10,0.2); }
+  .tag-ai { background: rgba(10,50,80,0.10); color: #1a3a5a; border: 1px solid rgba(10,50,80,0.2); }
+
+  /* ── DATA TABLE ── */
+  .data-table-wrap { overflow-x: auto; margin: 28px 0; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .data-table th {
+    background: var(--ink);
+    color: var(--gold-pale);
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border: none;
+  }
+  .data-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:nth-child(even) td { background: rgba(0,0,0,0.025); }
+  .data-table td .deva { font-size: 1.1em; }
+  .data-table td .iast { font-style: italic; }
+
+  /* ── GRID PANELS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin: 28px 0; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 28px 0; }
+
+  .panel {
+    border: 1px solid var(--rule);
+    padding: 20px;
+    background: white;
+    border-radius: 2px;
+  }
+  .section-deep .panel,
+  .section-teal .panel,
+  .section-violet .panel {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+  }
+  .panel-title {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+  .section-deep .panel-title,
+  .section-teal .panel-title,
+  .section-violet .panel-title { color: var(--gold-light); }
+  .panel p { font-size: 14px; line-height: 1.65; }
+
+  /* ── KARANA GRID ── */
+  .karana-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 28px 0;
+  }
+  .karana-item {
+    border: 1px solid var(--rule);
+    background: white;
+    padding: 14px 16px;
+    border-left: 3px solid var(--rust);
+  }
+  .karana-item.teal { border-left-color: var(--teal); }
+  .karana-item.violet { border-left-color: var(--violet); }
+  .karana-item.gold { border-left-color: var(--gold); }
+  .karana-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--slate-light);
+    margin-bottom: 3px;
+  }
+  .karana-deva {
+    font-family: var(--font-deva);
+    font-size: 1.05em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .karana-iast {
+    font-style: italic;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .karana-body { font-size: 12px; color: var(--slate); line-height: 1.55; }
+
+  /* ── MUDRA ENTRY ── */
+  .mudra-entry {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    margin: 28px 0;
+    padding: 24px;
+    border: 1px solid var(--rule);
+    background: white;
+  }
+  .section-deep .mudra-entry,
+  .section-teal .mudra-entry,
+  .section-violet .mudra-entry {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+  }
+  .mudra-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    padding: 20px;
+    min-height: 140px;
+  }
+  .mudra-svg { width: 80px; height: 80px; }
+  .mudra-name-deva {
+    font-family: var(--font-deva);
+    font-size: 1.1em;
+    color: var(--gold-pale);
+    margin-top: 10px;
+    text-align: center;
+  }
+  .mudra-content {}
+  .mudra-header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .mudra-iast {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--rust);
+  }
+  .section-deep .mudra-iast { color: var(--gold-light); }
+  .mudra-meaning {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+  }
+  .mudra-body { font-size: 14.5px; line-height: 1.7; }
+
+  /* ── BHAVA RASA TABLE ── */
+  .rasa-wheel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .rasa-cell {
+    text-align: center;
+    padding: 20px 16px;
+    border: 1px solid var(--rule);
+    background: white;
+  }
+  .rasa-cell.shringara { border-top: 3px solid #c05a42; }
+  .rasa-cell.hasya { border-top: 3px solid #d4a017; }
+  .rasa-cell.karuna { border-top: 3px solid #4a7a9a; }
+  .rasa-cell.raudra { border-top: 3px solid #8b0000; }
+  .rasa-cell.vira { border-top: 3px solid #4a6a2a; }
+  .rasa-cell.bhayanaka { border-top: 3px solid #2a2a4a; }
+  .rasa-cell.bibhatsa { border-top: 3px solid #5a4a2a; }
+  .rasa-cell.adbhuta { border-top: 3px solid #4a2d7a; }
+  .rasa-cell.shanta { border-top: 3px solid #2a6060; }
+  .rasa-deva {
+    font-family: var(--font-deva);
+    font-size: 1.4em;
+    margin-bottom: 4px;
+  }
+  .rasa-iast { font-style: italic; font-size: 15px; font-weight: 600; }
+  .rasa-meaning { font-size: 11px; color: var(--slate-light); margin: 4px 0; }
+  .rasa-deva-mood { font-family: var(--font-deva); font-size: 0.9em; color: var(--gold); }
+  .rasa-body { font-size: 12px; color: var(--slate); margin-top: 8px; line-height: 1.55; }
+
+  /* ── NEUROSCIENCE BOX ── */
+  .neuro-box {
+    background: linear-gradient(135deg, var(--teal-deep), #0d2e2e);
+    color: var(--parchment);
+    padding: 28px 32px;
+    margin: 28px 0;
+    border-radius: 2px;
+    position: relative;
+  }
+  .neuro-box::before {
+    content: 'NEUROSCIENCE CORRELATE';
+    position: absolute;
+    top: -10px; left: 24px;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    letter-spacing: 0.25em;
+    background: var(--teal);
+    color: var(--gold-pale);
+    padding: 3px 10px;
+  }
+  .neuro-box p { font-size: 14.5px; line-height: 1.7; margin-bottom: 0.8em; }
+  .neuro-box p:last-child { margin-bottom: 0; }
+  .neuro-box ul { margin: 0.5em 0 0.8em 1.5em; }
+  .neuro-box li { font-size: 14px; margin-bottom: 0.4em; }
+
+  /* ── TANTRA BOX ── */
+  .tantra-box {
+    background: linear-gradient(135deg, var(--violet-deep), #1a0a30);
+    color: var(--parchment);
+    padding: 28px 32px;
+    margin: 28px 0;
+    position: relative;
+  }
+  .tantra-box::before {
+    content: 'TANTRIC–ĀGAMIC DIMENSION';
+    position: absolute;
+    top: -10px; left: 24px;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    letter-spacing: 0.25em;
+    background: var(--violet);
+    color: var(--gold-pale);
+    padding: 3px 10px;
+  }
+  .tantra-box p { font-size: 14.5px; line-height: 1.7; margin-bottom: 0.8em; }
+  .tantra-box p:last-child { margin-bottom: 0; }
+
+  /* ── AI BOX ── */
+  .ai-box {
+    border: 1px solid #1a3a5a;
+    border-left: 4px solid #2a5a8a;
+    background: rgba(10,50,80,0.07);
+    padding: 20px 24px;
+    margin: 28px 0;
+    position: relative;
+  }
+  .ai-box::before {
+    content: 'AI / COMPUTATIONAL ANALYSIS';
+    display: block;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    letter-spacing: 0.25em;
+    color: #2a5a8a;
+    margin-bottom: 10px;
+  }
+  .ai-box p { font-size: 14.5px; line-height: 1.7; margin-bottom: 0.8em; }
+  .ai-box p:last-child { margin-bottom: 0; }
+
+  /* ── INLINE CITATION ── */
+  .cite {
+    font-size: 0.85em;
+    vertical-align: super;
+    color: var(--rust);
+    font-family: var(--font-mono);
+  }
+
+  /* ── REFERENCES ── */
+  .ref-list { counter-reset: refs; list-style: none; }
+  .ref-list li {
+    counter-increment: refs;
+    font-size: 13.5px;
+    padding: 6px 0 6px 32px;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.6;
+  }
+  .ref-list li::before {
+    content: counter(refs) '.';
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--rust);
+    padding-top: 2px;
+  }
+
+  /* ── ABSTRACT ── */
+  .abstract-box {
+    border: 1px solid var(--rule);
+    padding: 28px 36px;
+    background: white;
+    margin-bottom: 36px;
+  }
+  .abstract-box h3 {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+  }
+  .abstract-box p { font-size: 15px; line-height: 1.75; }
+
+  /* ── FIGURE CAPTION ── */
+  .fig-caption {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--slate-light);
+    margin-top: -12px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  #footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 40px 80px 40px 100px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  #footer a { color: var(--gold-light); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #toc-sidebar { transform: translateX(-100%); }
+    #toc-sidebar.open { transform: translateX(0); }
+    #toc-toggle { display: block; }
+    #main { margin-left: 0; }
+    #cover { padding: 80px 32px 60px; }
+    .cover-mandala { display: none; }
+    .page-section,
+    .section-deep,
+    .section-teal,
+    .section-violet { padding: 48px 32px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .rasa-wheel { grid-template-columns: 1fr 1fr; }
+    .mudra-entry { grid-template-columns: 1fr; }
+    .mudra-symbol { min-height: 100px; }
+    .cover-meta { flex-wrap: wrap; gap: 20px; }
+  }
+
+  /* Print */
+  @media print {
+    #toc-sidebar, #toc-toggle { display: none; }
+    #main { margin-left: 0; }
+    .page-section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<button id="toc-toggle" onclick="document.getElementById('toc-sidebar').classList.toggle('open')">☰ Contents</button>
+
+<!-- ═══════════ SIDEBAR TOC ═══════════ -->
+<nav id="toc-sidebar">
+  <div class="toc-brand">
+    <h2>White Paper</h2>
+    <p>Bhāva · Anubhāva · Karaṇa · Mudrā<br>Nāṭyaśāstra · Tantra · Neuroscience · AI</p>
+  </div>
+
+  <div class="toc-section-label">Foundations</div>
+  <a href="#abstract">Abstract & Keywords</a>
+  <a href="#intro">I. Introduction</a>
+  <a href="#cosmological">II. Cosmological Framework</a>
+
+  <div class="toc-section-label">Emotional Architecture</div>
+  <a href="#bhava">III. Bhāva — The Emotive Field</a>
+  <a href="#vibhava">III.1 Vibhāva</a>
+  <a href="#anubhava">IV. Anubhāva — The Somatic Sign</a>
+  <a href="#sattvika">IV.1 Sāttvika Bhāvas</a>
+  <a href="#rasa">V. Rasa — Nine Aesthetic Essences</a>
+
+  <div class="toc-section-label">Movement Science</div>
+  <a href="#karanas-intro">VI. Karaṇas — The 108 Body Algorithms</a>
+  <a href="#karanas-core">VI.1 Core Karaṇas (Selected 36)</a>
+  <a href="#karanas-neuro">VI.2 Neuromotor Correlates</a>
+  <a href="#mudras-intro">VII. Mudrās — The Hand Mind</a>
+  <a href="#asamyuta">VII.1 Asamyuta Mudrās</a>
+  <a href="#samyuta">VII.2 Samyuta Mudrās</a>
+  <a href="#mudra-neuro">VII.3 Mudrā Neuroscience</a>
+
+  <div class="toc-section-label">Integrative Layers</div>
+  <a href="#tantra-section">VIII. Tantric & Āgamic Dimensions</a>
+  <a href="#mantra-section">IX. Mantra & Sound Body</a>
+  <a href="#yoga-section">X. Yoga Sādhana Integration</a>
+  <a href="#kundalini">X.1 Kuṇḍalinī Pathway</a>
+  <a href="#medical">XI. Medical & Somatic Research</a>
+
+  <div class="toc-section-label">Advanced Research</div>
+  <a href="#ai-section">XII. AI & Computational Modeling</a>
+  <a href="#embodied-ai">XII.1 Embodied AI Architecture</a>
+  <a href="#discussion">XIII. Synthesis & Discussion</a>
+  <a href="#conclusion">XIV. Conclusion</a>
+  <a href="#references">XV. References</a>
+</nav>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div id="main">
+
+<!-- ═══════════ COVER ═══════════ -->
+<section id="cover">
+  <svg class="cover-mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="white">
+      <circle cx="100" cy="100" r="90" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="70" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="50" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="30" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="10" stroke-width="0.5"/>
+      <!-- 8 petals -->
+      <g transform-origin="100 100">
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(45 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(90 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(135 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(180 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(225 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(270 100 100)"/>
+        <ellipse cx="100" cy="40" rx="8" ry="30" stroke-width="0.7" transform="rotate(315 100 100)"/>
+      </g>
+      <!-- spokes -->
+      <line x1="100" y1="10" x2="100" y2="190" stroke-width="0.3"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke-width="0.3"/>
+      <line x1="36" y1="36" x2="164" y2="164" stroke-width="0.3"/>
+      <line x1="164" y1="36" x2="36" y2="164" stroke-width="0.3"/>
+    </g>
+  </svg>
+  <div class="cover-eyebrow">Scholarly White Paper · Nāṭyaśāstra Studies & Cognitive Science</div>
+  <div class="cover-rule"></div>
+  <h1>Bhāva, Anubhāva &amp; the<br><em>Somatic Lexicon</em></h1>
+  <p class="cover-subtitle">The 108 Karaṇas and Classical Mudrās as an Integrated System of Embodied Cognition, Neuroplasticity, Tantric Sādhana, and Artificial Intelligence Modeling</p>
+  <div class="cover-deva">भाव · अनुभाव · करण · मुद्रा</div>
+  <div class="cover-keywords">
+    <span class="kw-tag">Nāṭyaśāstra</span>
+    <span class="kw-tag">Embodied Cognition</span>
+    <span class="kw-tag">Rasa Theory</span>
+    <span class="kw-tag">Neuroplasticity</span>
+    <span class="kw-tag">Tantric Sādhana</span>
+    <span class="kw-tag">AI Motion Modeling</span>
+    <span class="kw-tag">Kuṇḍalinī Yoga</span>
+    <span class="kw-tag">Sanskrit Śāstra</span>
+    <span class="kw-tag">Psychosomatics</span>
+    <span class="kw-tag">Mirror Neurons</span>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Domain</label>
+      <span>Comparative Śāstra / Cognitive Neuroscience</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Tradition Source</label>
+      <span>Bharata Muni · Abhinavagupta · Nandīkeśvara</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Published At</label>
+      <span>culturalmusings.com · 2025</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ I. ABSTRACT ═══════════ -->
+<section class="page-section" id="abstract">
+  <div class="section-eyebrow">Preliminary</div>
+  <h2 class="section-title">Abstract <span class="deva-inline">संक्षेप</span></h2>
+  <div class="title-rule"></div>
+  <div class="abstract-box">
+    <h3>Abstract</h3>
+    <p>This white paper offers a rigorous multi-disciplinary investigation into the classical Indian performance science of <span class="iast">Nāṭyaśāstra</span> as a systematic model of embodied emotional cognition. It situates the twin concepts of <span class="iast">Bhāva</span> (the psycho-emotive state) and <span class="iast">Anubhāva</span> (its involuntary somatic expression) within an integrative framework encompassing the 108 <span class="iast">Karaṇas</span> (kinematic body-algorithms), the complete taxonomy of classical <span class="iast">Mudrās</span> (gesture-signs), Śaiva Tantric semiology, <span class="iast">Mantra</span> vibrational theory, and <span class="iast">Kuṇḍalinī Yoga</span> sādhana. We demonstrate that the <span class="iast">Nāṭyaśāstra</span> framework anticipates — and in several domains exceeds — contemporary neurological models of emotional embodiment, predictive coding, mirror-neuron empathy, somatic marker theory, and autonomic nervous system regulation. The Tantric exegesis of Abhinavagupta, particularly his <span class="iast">Abhinavabhāratī</span>, is shown to supply a non-dual consciousness framework that maps isomorphically onto oscillatory neural binding, interoceptive inference, and the phenomenology of aesthetic experience. Selective analysis of the most somatically significant Karaṇas and Mudrās from medical, yogic, and AI-modeling perspectives is provided. Implications for AI motion-capture architecture, embodied affective computing, therapeutic dance movement, and cross-cultural emotion recognition are elaborated. The paper positions the <span class="iast">Nāṭyaśāstra</span> not as an anthropological curiosity but as a living computational specification for the human body-mind interface.</p>
+  </div>
+  <p><strong>Keywords:</strong> <span class="iast">Bhāva, Anubhāva, Sāttvika, Rasa, Karaṇa, Mudrā, Nāṭyaśāstra, Abhinavagupta, Abhinavabhāratī, Kuṇḍalinī, Tantra, Mantra, Mirror Neurons, Somatic Markers, Predictive Coding, Affective Computing, Embodied AI</span></p>
+</section>
+
+<!-- ═══════════ I. INTRODUCTION ═══════════ -->
+<section class="page-section" id="intro">
+  <div class="section-eyebrow">Section I</div>
+  <h2 class="section-title">Introduction <span class="deva-inline">प्रस्तावना</span></h2>
+  <div class="title-rule"></div>
+  <p>The <span class="iast">Nāṭyaśāstra</span> (<span class="deva">नाट्यशास्त्र</span>) of Bharata Muni, composed between the 2nd century BCE and 2nd century CE across its 36 chapters and approximately 6,000 <span class="iast">ślokas</span>, constitutes the world's most exhaustive pre-modern theory of embodied performance. While routinely classified under aesthetics or dramaturgy, the text is more accurately understood as a unified theory of the human psychosomatic apparatus — a phenomenological science of how internal emotional states are produced, cultivated, transmitted, and received through the body, sound, and space.</p>
+
+  <div class="pull-quote">
+    "The body is the first and final instrument of meaning. <span class="iast">Nāṭyaśāstra</span> is not a manual for actors; it is a map of consciousness wearing flesh."
+    <cite>— Paraphrase of Abhinavagupta, <span class="iast">Abhinavabhāratī</span>, Chapter I</cite>
+  </div>
+
+  <p>Two concepts form the irreducible core of this system: <strong><span class="iast">Bhāva</span></strong> — the fundamental emotional tone or affective state that infuses consciousness — and <strong><span class="iast">Anubhāva</span></strong> — the somatic and behavioral signs through which that state makes itself legible to an observer. Together they constitute a semiotic circuit: inner state → somatic expression → aesthetic reception → resonant state in the observer (Rasa). The 108 <span class="iast">Karaṇas</span> are the kinematic vocabulary through which this circuit is embodied in space, and the <span class="iast">Mudrās</span> are the precise hand-gesture sublanguage that concentrates meaning at the extremities of the nervous system.</p>
+
+  <p>This paper proceeds from the conviction that these classical formulations are not merely poetic — they encode a rigorous empirical science of somatic semiotics whose principles can be verified, extended, and operationalized through contemporary neuroscience, somatic medicine, Tantric philosophy, and artificial intelligence. Three methodological registers are maintained throughout: (1) classical philological analysis of Sanskrit primary texts; (2) neuroscientific and medical evidence; (3) computational/AI modeling implications.</p>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Primary Sanskrit Sources</div>
+      <p>Nāṭyaśāstra (Bharata Muni); Abhinavabhāratī (Abhinavagupta); Abhinayadarpaṇa (Nandīkeśvara); Tantrāloka (Abhinavagupta); Parātrīśikā-Vivaraṇa; Haṭhayogapradīpikā; Śiva Sūtras; Vākyapadīya (Bharṭhari)</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Modern Scientific Frameworks</div>
+      <p>Somatic Marker Hypothesis (Damasio); Predictive Processing / Active Inference (Friston); Mirror Neuron Theory (Rizzolatti); Polyvagal Theory (Porges); Embodied Cognition (Varela, Thompson, Rosch); Affective Computing (Picard); Embodied AI (Brooks, Pfeifer)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ II. COSMOLOGICAL FRAMEWORK ═══════════ -->
+<section class="page-section section-alt" id="cosmological">
+  <div class="section-eyebrow">Section II</div>
+  <h2 class="section-title">Cosmological & Ontological Framework <span class="deva-inline">विश्वदृष्टि</span></h2>
+  <div class="title-rule"></div>
+  <p>Before the body can be understood as an instrument, its ontological status must be established. Both the <span class="iast">Nāṭyaśāstra</span> and the Śaiva Tantric traditions operate within a framework that differs fundamentally from Cartesian dualism. The body (<span class="iast">śarīra</span>, <span class="deva">शरीर</span>) is not a container for consciousness but a condensate of it — a vibrational densification of <span class="iast">Śakti</span> proceeding from pure Awareness (<span class="iast">Cit</span>) through the 36 <span class="iast">tattvas</span>.</p>
+
+  <h3 class="sub-title">The 36 Tattvas and the Body-Mind Continuum</h3>
+  <p>The Trika Śaiva ontology of Kashmir, most fully articulated by Abhinavagupta (c. 950–1016 CE), presents reality as a nested unfoldment from <span class="iast">Paramaśiva</span> (absolute undifferentiated consciousness) through successive degrees of self-limitation (<span class="iast">āṇavamala, māyīyamala, kārmamala</span>) until gross embodied experience is produced. This has direct bearing on how emotion is understood: a <span class="iast">bhāva</span> is not merely a psychological event — it is a patterned contraction within universal Awareness, capable of being recognized, refined, and dissolved back into its source through artistic and yogic practice.</p>
+
+  <div class="neuro-box">
+    <p>Contemporary neuroscience offers a structurally parallel model in Karl Friston's Free Energy Principle and Active Inference framework. The brain is modeled as a predictive hierarchy — each level generating probabilistic models of sensory input, sending predictions downward, and updating beliefs based on prediction errors propagated upward. Emotion, in this framework, is not a secondary epiphenomenon but a high-level prior about the bodily state (interoceptive prediction). This maps precisely onto the Tantric view: <span class="iast">bhāva</span> as a pattern in the hierarchical inference machinery of consciousness-matter.</p>
+  </div>
+
+  <h3 class="sub-title">Nāṭya as the Fifth Veda</h3>
+  <p>Bharata declares (<span class="iast">NS</span> 1.14–15): <span class="deva">नाट्यवेदः समस्तानां वेदानामुत्तमो मतः</span> — "The Nāṭya Veda is held to be supreme among all Vedas." This is not an idle claim. The <span class="iast">Nāṭyaśāstra</span> synthesizes the four Vedas in functional terms: verbal eloquence from <span class="iast">Ṛgveda</span>; melodic structure from <span class="iast">Sāmaveda</span>; gesture and bodily action from <span class="iast">Yajurveda</span>; and emotional expression (<span class="iast">rasa</span>) from <span class="iast">Atharvaveda</span>. This fourfold integration constitutes what we would today call a multimodal representational system — one designed not merely to inform but to induce state-change in the observer.</p>
+
+  <div class="tantra-box">
+    <p>In Abhinavagupta's non-dual reading, the theatrical space (<span class="iast">raṅgamandapa</span>) is homologized with the <span class="iast">cakra</span>-body of the practitioner: the stage is the body, the performance is the arising and subsiding of the 36 <span class="iast">tattvas</span>, and the spectator's experience of <span class="iast">rasa</span> is an echo of the primordial bliss (<span class="iast">ānanda</span>) of pure Awareness recognizing itself. This is not metaphor — it is a formal philosophical proposition with testable somatic implications.</p>
+  </div>
+</section>
+
+<!-- ═══════════ III. BHĀVA ═══════════ -->
+<section class="page-section" id="bhava">
+  <div class="section-eyebrow">Section III</div>
+  <h2 class="section-title">Bhāva — The Emotive Field <span class="deva-inline">भाव — आवेगक्षेत्रम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The word <span class="iast">bhāva</span> (<span class="deva">भाव</span>) derives from the root <span class="iast">√bhū</span> — "to be, to become, to exist." It is therefore not merely "emotion" in the sense of a felt experience but something more ontologically fundamental: <em>that which makes existence take a particular quality</em>. Bharata classifies 49 <span class="iast">bhāvas</span> across three categories.</p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Sanskrit</th>
+          <th>Count</th>
+          <th>Nature</th>
+          <th>Neuro-Functional Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sthāyī Bhāva</strong></td>
+          <td><span class="deva">स्थायी भाव</span></td>
+          <td>8 (+1)</td>
+          <td>Dominant, stable, enduring emotional ground states; each corresponds to one Rasa</td>
+          <td>Long-duration limbic-cortical patterns; sustained attentional salience; dispositional affective baseline (Damasio's background emotions)</td>
+        </tr>
+        <tr>
+          <td><strong>Vyabhicārī / Sañcārī Bhāva</strong></td>
+          <td><span class="deva">व्यभिचारी भाव</span></td>
+          <td>33</td>
+          <td>Transient, passing emotional currents that move through and enrich the Sthāyī Bhāva; "complementary" states</td>
+          <td>Short-duration amygdala activations, autonomic micro-adjustments, rapid oscillations in prefrontal-limbic circuits; equivalent to Ekman's micro-expressions</td>
+        </tr>
+        <tr>
+          <td><strong>Sāttvika Bhāva</strong></td>
+          <td><span class="deva">सात्त्विक भाव</span></td>
+          <td>8</td>
+          <td>Involuntary, purely autonomic manifestations arising from depth of emotional immersion; signs of authentic inner state</td>
+          <td>Direct autonomic nervous system outputs; parasympathetic / sympathetic activation signatures; neurohormonal cascades (oxytocin, cortisol, adrenaline)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">The Nine Sthāyī Bhāvas</h3>
+  <div class="rasa-wheel">
+    <div class="rasa-cell shringara">
+      <div class="rasa-deva">रति</div>
+      <div class="rasa-iast">Rati</div>
+      <div class="rasa-meaning">Love / Delight</div>
+      <div class="rasa-deva-mood">→ शृङ्गार</div>
+      <div class="rasa-body">Attachment, tenderness, sensory pleasure. Activates reward circuitry (dopamine/oxytocin); sustained HPA axis modulation.</div>
+    </div>
+    <div class="rasa-cell hasya">
+      <div class="rasa-deva">हास</div>
+      <div class="rasa-iast">Hāsa</div>
+      <div class="rasa-meaning">Mirth / Laughter</div>
+      <div class="rasa-deva-mood">→ हास्य</div>
+      <div class="rasa-body">Incongruity detection and resolution. Bilateral prefrontal activation; endorphin release; vagal tone enhancement.</div>
+    </div>
+    <div class="rasa-cell karuna">
+      <div class="rasa-deva">शोक</div>
+      <div class="rasa-iast">Śoka</div>
+      <div class="rasa-meaning">Grief / Sorrow</div>
+      <div class="rasa-deva-mood">→ करुण</div>
+      <div class="rasa-body">Separation, loss. Anterior cingulate cortex; high-frequency HRV suppression; pro-social bonding via shared pain.</div>
+    </div>
+    <div class="rasa-cell raudra">
+      <div class="rasa-deva">क्रोध</div>
+      <div class="rasa-iast">Krodha</div>
+      <div class="rasa-meaning">Anger / Wrath</div>
+      <div class="rasa-deva-mood">→ रौद्र</div>
+      <div class="rasa-body">Injustice, obstruction. Amygdala hyper-activation; cortisol surge; sympathetic dominance; facial Action Unit 4+23.</div>
+    </div>
+    <div class="rasa-cell vira">
+      <div class="rasa-deva">उत्साह</div>
+      <div class="rasa-iast">Utsāha</div>
+      <div class="rasa-meaning">Heroic Energy</div>
+      <div class="rasa-deva-mood">→ वीर</div>
+      <div class="rasa-body">Resolute purpose, courage. Elevated norepinephrine; motor cortex priming; postural expansion (power posture effect).</div>
+    </div>
+    <div class="rasa-cell bhayanaka">
+      <div class="rasa-deva">भय</div>
+      <div class="rasa-iast">Bhaya</div>
+      <div class="rasa-meaning">Fear / Dread</div>
+      <div class="rasa-deva-mood">→ भयानक</div>
+      <div class="rasa-body">Threat detection. Rapid amygdala-thalamic circuit; freeze-fight-flight cascade; cortisol-epinephrine co-release.</div>
+    </div>
+    <div class="rasa-cell bibhatsa">
+      <div class="rasa-deva">जुगुप्सा</div>
+      <div class="rasa-iast">Jugupsā</div>
+      <div class="rasa-meaning">Disgust</div>
+      <div class="rasa-deva-mood">→ बीभत्स</div>
+      <div class="rasa-body">Contamination avoidance. Insula activation; nausea reflex; levator labii superioris contraction (Ekman AU9).</div>
+    </div>
+    <div class="rasa-cell adbhuta">
+      <div class="rasa-deva">विस्मय</div>
+      <div class="rasa-iast">Vismaya</div>
+      <div class="rasa-meaning">Wonder / Marvel</div>
+      <div class="rasa-deva-mood">→ अद्भुत</div>
+      <div class="rasa-body">Cognitive novelty; schema-breaking. Default mode network disruption; awe-related elevation; goosebump cascade (pilomotor reflex).</div>
+    </div>
+    <div class="rasa-cell shanta">
+      <div class="rasa-deva">शम</div>
+      <div class="rasa-iast">Śama</div>
+      <div class="rasa-meaning">Tranquility / Peace</div>
+      <div class="rasa-deva-mood">→ शान्त</div>
+      <div class="rasa-body">The ninth rasa (Abhinavagupta). Parasympathetic dominance; high HRV; default mode network coherence; meditative baseline.</div>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="vibhava">Vibhāva: The Causal Infrastructure of Bhāva</h3>
+  <p>Before <span class="iast">bhāva</span> arises, something must precipitate it. Bharata identifies this precipitating cause as <span class="iast">vibhāva</span> (<span class="deva">विभाव</span>), divided into:</p>
+  <div class="grid-2">
+    <div class="entry-card">
+      <div class="entry-card-header">
+        <span class="entry-name-deva">आलम्बन विभाव</span>
+        <span class="entry-name-iast">Ālambana Vibhāva</span>
+      </div>
+      <div class="entry-body">
+        <p>The primary object or person that anchors the emotional state. A beloved figure in Śṛṅgāra; a calamity in Karuṇa; a demon in Raudra. In neuroscientific terms: the salient stimulus object that produces amygdala engagement and top-down attentional capture. The <span class="iast">ālambana</span> is the reference point of the predictive model — the "attractor" in the affective state space.</p>
+      </div>
+    </div>
+    <div class="entry-card teal-accent">
+      <div class="entry-card-header">
+        <span class="entry-name-deva">उद्दीपन विभाव</span>
+        <span class="entry-name-iast">Uddīpana Vibhāva</span>
+      </div>
+      <div class="entry-body">
+        <p>The environmental enhancers or "kindlers" of the state — moonlight intensifying love; battlefield drums intensifying heroism; a funeral pyre intensifying grief. These are the contextual modulators of affective salience. In AI terms: the feature-context weights that amplify the primary affective label in a given scene — crucial for robust scene-based emotion recognition.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">The 33 Vyabhicārī Bhāvas — Transient Emotional States</h3>
+  <p>These 33 fleeting states (<span class="iast">nirveda, glāni, śaṅkā, asūyā, mada, śrama, ālasya, dainya, cintā, moha, smṛti, dhṛti, vrīḍā, capalatā, harṣa, āvega, jaḍatā, garva, viṣāda, autsukya, nidrā, apasmāra, supta, vibodha, amarṣa, avahittha, ugratā, mati, vyādhi, unmāda, maraṇa, trāsa, vitarka</span>) flow through the stable ground of a <span class="iast">sthāyī bhāva</span> like tributaries feeding a river, enriching its color and depth without displacing it. The analogy to modern affective science is precise: these are the rapid micro-states measured by continuous valence-arousal tracking in psychophysiological studies, which modulate but do not replace the slow-changing background affective baseline.</p>
+</section>
+
+<!-- ═══════════ IV. ANUBHĀVA ═══════════ -->
+<section class="page-section section-alt" id="anubhava">
+  <div class="section-eyebrow">Section IV</div>
+  <h2 class="section-title">Anubhāva — The Somatic Signature <span class="deva-inline">अनुभाव — देहलिखितम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p><span class="iast">Anubhāva</span> (<span class="deva">अनुभाव</span>) = <span class="iast">anu</span> (following, consequent upon) + <span class="iast">bhāva</span> (state). They are the outward somatic signs that "follow" an inner state — the body's involuntary writing of what the mind contains. Bharata specifies these as willed (<span class="iast">kāyika, vācika, āhārya</span>) and unwilled (<span class="iast">sāttvika</span>). The unwilled ones are the purest signal; the willed ones are the performative vocabulary.</p>
+
+  <h3 class="sub-title">Principal Anubhāva Categories</h3>
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-title">Āṅgika — Bodily</div>
+      <p>Movements of major body parts: <span class="iast">śīra</span> (head), <span class="iast">hasta</span> (hands), <span class="iast">vakṣas</span> (chest), <span class="iast">pārśva</span> (flanks), <span class="iast">kaṭi</span> (waist), <span class="iast">pāda</span> (feet). These are the motor expressions — the behaviorally enacted Anubhāva readable by observer mirror-neuron systems.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Vācika — Verbal</div>
+      <p>Vocal quality, pitch, pace, tremor, silence. Rage produces harsh staccato; grief produces elongated falling tone; love produces soft nasal resonance. Maps precisely onto prosodic-emotional voice analysis in contemporary affective computing.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Āhārya — Costume / Adornment</div>
+      <p>Color, ornament, makeup as extended somatic signifiers. Modern research confirms color-emotion associations are not merely cultural conventions but have partial physiological grounding (red → sympathetic arousal; blue → parasympathetic modulation).</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="sattvika">The Eight Sāttvika Bhāvas — Authentic Autonomic Signatures</h3>
+  <p>The <span class="iast">sāttvika bhāvas</span> are the most theoretically important class — they are involuntary, arising from the depth of <span class="iast">sattva guṇa</span> (the quality of luminous awareness) and cannot be faked without genuine emotional immersion. They are the <span class="iast">Nāṭyaśāstra</span>'s lie-detector.</p>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">01</span>
+      <span class="entry-name-deva">स्तम्भ</span>
+      <span class="entry-name-iast">Stambha</span>
+      <span class="entry-meaning">Paralysis / Freezing</span>
+    </div>
+    <div class="entry-body">
+      <p>Sudden complete motor immobility arising from overwhelming emotion — extreme joy, shock, terror. The body freezes mid-gesture. In neurophysiology: tonic immobility response mediated by the periaqueductal gray (PAG); a phylogenetically ancient defensive reflex when neither fight nor flight is viable. Also observed at the positive extreme in experiences of awe (Keltner & Haidt, 2003).</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">PAG Circuit</span><span class="tag tag-yoga">Prāṇa arrest</span><span class="tag tag-tantra">Śaktipāta signature</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">02</span>
+      <span class="entry-name-deva">स्वेद</span>
+      <span class="entry-name-iast">Sveda</span>
+      <span class="entry-meaning">Perspiration</span>
+    </div>
+    <div class="entry-body">
+      <p>Emotional sweating, distinct from thermoregulatory sweating. Palmar and axillary sweat glands are innervated by the sympathetic nervous system but triggered by psychological stimulation (fear, excitement, anticipation). Galvanic skin response (GSR/EDA) measures this and is the most reliable real-time physiological correlate of emotional arousal — used in lie detection, biofeedback, and affective computing.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">EDA / GSR Correlate</span><span class="tag tag-ai">Wearable biosensor signal</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">03</span>
+      <span class="entry-name-deva">रोमाञ्च</span>
+      <span class="entry-name-iast">Romāñca</span>
+      <span class="entry-meaning">Horripilation / Goosebumps</span>
+    </div>
+    <div class="entry-body">
+      <p><span class="iast">Romāñca</span> — also known as <span class="iast">pulaka</span> — is the piloerection reflex: contraction of arrector pili muscles causing hair to stand on end. This is sympathetic-adrenergic, but strikingly it occurs in response to both terror AND transcendent aesthetic experience (music-induced chills, known as "frisson"). Neurologically, frisson is associated with dopamine release in the nucleus accumbens and the release of endogenous opioids. In Tantric physiology, <span class="iast">romāñca</span> is a marker of <span class="iast">Kuṇḍalinī</span> activation — the surge of prāṇic energy ascending the suṣumṇā.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Dopamine / Frisson</span><span class="tag tag-tantra">Kuṇḍalinī marker</span><span class="tag tag-yoga">Prāṇa surge</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">04</span>
+      <span class="entry-name-deva">स्वरभेद</span>
+      <span class="entry-name-iast">Svarabheda</span>
+      <span class="entry-meaning">Voice Break / Tremor</span>
+    </div>
+    <div class="entry-body">
+      <p>Breaking, cracking, or trembling of the voice. This results from the sudden involvement of the autonomic nervous system in the modulation of laryngeal musculature — the vagus nerve (CN X) simultaneously controlling both emotional state (via the cardiac branch) and phonation (via the recurrent laryngeal branch). Polyvagal Theory (Porges) identifies this neural substrate as the "social engagement system" — the same circuit mediates vocal prosody, facial expression, and cardiac regulation. Voice break is therefore not incidental to emotion but constitutive of its communicative transmission.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Vagus Nerve / Polyvagal</span><span class="tag tag-ai">Voice emotion recognition</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">05</span>
+      <span class="entry-name-deva">वेपथु</span>
+      <span class="entry-name-iast">Vepathu</span>
+      <span class="entry-meaning">Trembling / Shuddering</span>
+    </div>
+    <div class="entry-body">
+      <p>Trembling of the limbs, lips, or entire body under intense emotional load. Neurologically mediated by excess norepinephrine overloading the cortico-spinal tract, producing a kind of overflow oscillation. Clinically analogous to the PTSD startle response and the therapeutic tremor deliberately induced in TRE (Tension and Trauma Releasing Exercises, developed by Peter Levine and David Berceli), which induces controlled neurogenic tremor to discharge stored stress from the psoas muscle group.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Norepinephrine overflow</span><span class="tag tag-yoga">Prāṇa discharge</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">06</span>
+      <span class="entry-name-deva">वैवर्ण्य</span>
+      <span class="entry-name-iast">Vaivarṇya</span>
+      <span class="entry-meaning">Change of Color</span>
+    </div>
+    <div class="entry-body">
+      <p>The facial flushing or blanching caused by redistribution of cutaneous blood flow under autonomic control. Fear → peripheral vasoconstriction (blanching); shame/embarrassment → facial vasodilation (blushing); anger → diffuse flushing. This is measurable via infrared thermal imaging and remote photoplethysmography (rPPG) — techniques being developed for contactless emotional state assessment in AI systems and clinical settings.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Vasomotor ANS</span><span class="tag tag-ai">Thermal imaging / rPPG</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">07</span>
+      <span class="entry-name-deva">अश्रु</span>
+      <span class="entry-name-iast">Aśru</span>
+      <span class="entry-meaning">Tears / Weeping</span>
+    </div>
+    <div class="entry-body">
+      <p>Emotional lacrimation — tears of grief, joy, or overwhelming beauty. Uniquely, emotional tears (unlike reflex or basal tears) contain elevated levels of leucine enkephalin (endogenous opioid), prolactin, ACTH, and manganese — suggesting they are an active neuroendocrine discharge mechanism. Frey's research established that emotional weeping functions as a stress-regulation mechanism: crying triggers parasympathetic rebound after sympathetic arousal, explaining the relief that follows. In Bhakti Yoga, <span class="iast">aśru</span> (particularly as <span class="iast">premāśru</span> — tears of divine love) is considered the highest <span class="iast">sāttvika bhāva</span>.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Opioid / Prolactin release</span><span class="tag tag-tantra">Bhakti rasāyana</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">08</span>
+      <span class="entry-name-deva">प्रलय</span>
+      <span class="entry-name-iast">Pralaya</span>
+      <span class="entry-meaning">Loss of Consciousness / Swoon</span>
+    </div>
+    <div class="entry-body">
+      <p>The most extreme sāttvika state: complete loss of ordinary consciousness under the weight of overwhelming emotion or ecstasy. In clinical terms: vasovagal syncope triggered by extreme emotional arousal — the vagus nerve producing such profound cardiac slowing and vascular dilation that cerebral perfusion momentarily fails. In yogic and Tantric context, <span class="iast">pralaya</span> in the performance context mirrors the <span class="iast">samādhi</span> in which the meditator's ordinary consciousness temporarily dissolves. Abhinavagupta reads this as the performer briefly touching the state of pure Awareness (<span class="iast">Paramaśiva</span>) — the ultimate aesthetic-mystical convergence.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Vasovagal syncope</span><span class="tag tag-tantra">Samādhi correlate</span><span class="tag tag-yoga">Turīya state</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ V. RASA ═══════════ -->
+<section class="page-section section-deep" id="rasa">
+  <div class="section-eyebrow">Section V</div>
+  <h2 class="section-title">Rasa — The Ninth Dimension of Experience <span class="deva-inline">रस — अनुभवस्य नवमं तत्त्वम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p><span class="iast">Rasa</span> (<span class="deva">रस</span>) — literally "taste," "essence," "juice" — is the supreme concept of the entire system. It is neither the emotion itself, nor the performance, nor the spectator's intellectual understanding, but a fourth state that transcends all three: an aesthetic-experiential "flavoring" of consciousness that arises when Vibhāva, Anubhāva, and Vyabhicārī Bhāva are combined in a properly constituted artistic performance.</p>
+
+  <div class="pull-quote">
+    <span class="deva">विभावानुभावव्यभिचारिसंयोगाद्रसनिष्पत्तिः</span><br><br>
+    "From the combination of Vibhāva, Anubhāva, and Vyabhicārī [Bhāva], the realization of Rasa arises."
+    <cite>— Bharata Muni, Nāṭyaśāstra 6.31</cite>
+  </div>
+
+  <h3 class="sub-title">Abhinavagupta's Revolutionary Interpretation</h3>
+  <p>Bharata's formula is functional but leaves the mechanism unexplained. Abhinavagupta's intervention in his <span class="iast">Abhinavabhāratī</span> commentary is philosophically decisive: <span class="iast">rasa</span> is not produced by the combination of elements as sugar is dissolved in water (the <span class="iast">niṣpatti</span> view). Rather, it is <span class="iast">vyakta</span> — "revealed" or "manifested" from the spectator's own consciousness, which already contains all <span class="iast">bhāvas</span> in latent form (<span class="iast">vāsanā</span>). The performance is not a cause but a <span class="iast">vibhāva</span> — a revealing condition.</p>
+
+  <div class="neuro-box">
+    <p>This maps with extraordinary precision onto the predictive processing model of emotion perception (Barrett, 2017; Clark, 2016). The observer's brain does not passively receive emotional information from a performance — it actively generates predictions about what the observed body states mean, based on its prior affective experiences. Rasa-experience is thus an act of <strong>active inference</strong> about the performer's (and the character's) inner state — one that simultaneously activates the observer's own corresponding neural representations. This is the mirror neuron system in its most culturally elaborated form.</p>
+    <ul>
+      <li>Mirror neurons (Rizzolatti, Gallese): fire both when an action is performed AND when it is observed → the basis of empathy in neural terms</li>
+      <li>Cortical simulation (Goldman): emotion recognition involves simulating the observed state in one's own motor and affective systems</li>
+      <li>Aesthetic chills research (Salimpoor et al., 2011): music-induced emotional peaks involve dopamine release in anticipatory AND reward phases → maps onto <span class="iast">rasa</span> arising from <span class="iast">tańhā</span> (anticipation) and <span class="iast">niṣpatti</span> (fulfillment)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ VI. KARAṆAS ═══════════ -->
+<section class="page-section" id="karanas-intro">
+  <div class="section-eyebrow">Section VI</div>
+  <h2 class="section-title">The 108 Karaṇas — Body Algorithms in Space <span class="deva-inline">१०८ करणानि — देहगणितम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The <span class="iast">Nāṭyaśāstra</span>'s Chapter 4 presents 108 <span class="iast">karaṇas</span> (<span class="deva">करण</span>) — derived from <span class="iast">√kṛ</span>, "to do, to make." Each <span class="iast">karaṇa</span> is a complete, indivisible unit of body movement defined by the simultaneous specification of:</p>
+
+  <div class="grid-4">
+    <div class="panel">
+      <div class="panel-title">Hasta</div>
+      <p>Hand position / Mudrā deployed</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Pāda</div>
+      <p>Foot position / stance type (<span class="iast">sthāna</span>)</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Śarīra</div>
+      <p>Torso orientation and bend</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Dṛṣṭi</div>
+      <p>Gaze direction and quality</p>
+    </div>
+  </div>
+
+  <p>This is a complete kinematic specification: position of all joints simultaneously defined. The 108 Karaṇas are therefore best understood as <strong>pose-movement primitives</strong> — the atoms of an embodied gesture language. From these 108 primitives, 32 <span class="iast">aṅgahāras</span> (sequences of linked Karaṇas) are formed, and from these, the full vocabulary of classical Bharatanāṭyam, Oḍissi, and Kūcipūḍi choreography is derived.</p>
+
+  <div class="ai-box">
+    <p>In computer vision and robotics, this is precisely the level at which <strong>motion primitives</strong> (MPs) or <strong>Dynamic Movement Primitives</strong> (DMPs) operate. Each MP encodes a stereotyped movement pattern (joint trajectory bundle) that can be sequenced and parameterized. The 108 Karaṇas of the Nāṭyaśāstra constitute one of the earliest known systematic libraries of human motion primitives, with the additional dimension that each primitive carries affective and semantic metadata. This is what modern AI motion databases lack — and why the Karaṇa system offers a unique resource for emotionally intelligent robotics and avatar animation.</p>
+    <p>Contemporary motion capture databases (CMU MoCap, NTU RGB+D, AMASS) capture thousands of motion sequences but lack the semantically structured, affectively tagged, context-annotated organization of the Karaṇa taxonomy.</p>
+  </div>
+
+  <h3 class="sub-title" id="karanas-core">Core Karaṇas: The 36 Most Somatically Significant</h3>
+  <p>From the 108, we identify 36 Karaṇas of particular significance for somatic medicine, yoga sādhana, Tantric practice, and AI motion modeling. These are grouped by their primary somatic and energetic function.</p>
+</section>
+
+<!-- KARANA DEEP DIVE -->
+<section class="page-section section-alt" id="karanas-detail">
+  <div class="section-eyebrow">Section VI.1</div>
+  <h2 class="section-title">Selected Karaṇas — Deep Analysis <span class="deva-inline">करणविवरणम्</span></h2>
+  <div class="title-rule"></div>
+
+  <h3 class="sub-title">Group A: Grounding & Stability Karaṇas (Pṛthvī-tattva)</h3>
+
+  <div class="entry-card">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-001</span>
+      <span class="entry-name-deva">तलसंस्फोटित</span>
+      <span class="entry-name-iast">Talasaṃsphoṭita</span>
+      <span class="entry-meaning">"Resounding Palm Strike"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Both feet in <span class="iast">samapāda</span> (equal stance); both palms struck together in front of the chest (<span class="iast">añjali hasta</span>); torso erect; gaze forward and level.</p>
+      <p><strong>Somatic function:</strong> The bilateral palm strike produces a percussive vibration that resonates through the sternum and into the thoracic cavity. The heart, pericardium, and anterior vagal plexus receive direct vibratory stimulation. This is precisely the gesture of reverential greeting (<span class="iast">namaskāra</span>), and its physical mechanics explain why it produces immediate calming: bilateral symmetrical movement activates interhemispheric coherence via the corpus callosum, and the vagal stimulation induces HRV increase and parasympathetic dominance.</p>
+      <p><strong>Yogic / Tantric dimension:</strong> The <span class="iast">añjali</span> position creates a container — a mudric vessel — for prāṇic energy in the <span class="iast">anāhata cakra</span> region. In Śrī Vidyā pūjā, every offering begins with this mudra because it literally opens the cardiac prāṇic space.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Vagal stimulation</span><span class="tag tag-neuro">Interhemispheric sync</span><span class="tag tag-yoga">Anāhata cakra</span><span class="tag tag-tantra">Namaskāra mudra</span>
+    </div>
+  </div>
+
+  <div class="entry-card">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-002</span>
+      <span class="entry-name-deva">वलितोरु</span>
+      <span class="entry-name-iast">Valitoru</span>
+      <span class="entry-meaning">"Twisted Thigh"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Standing in <span class="iast">ardhacandra</span> (half-moon) foot position; internal rotation of one thigh while the knee of the same leg bends; torso rotating in opposition; arms in asymmetric gesture.</p>
+      <p><strong>Somatic function:</strong> Internal thigh rotation engages the deep hip rotator cuff — piriformis, obturator internus/externus, gemelli, and quadratus femoris — the same muscle group that houses the sacral plexus and is implicated in psoas-diaphragm tension patterns. Therapeutic bodywork traditions (Structural Integration, Somatic Experiencing) prioritize releasing these muscles as they store chronic stress response. The Karaṇa mobilizes this region through coordinated movement rather than passive release.</p>
+      <p><strong>AI motion modeling:</strong> Hip rotation with torso counter-rotation is a biomechanically complex pattern requiring accurate pelvis-thorax coupling models — one of the harder motor primitives for humanoid robots to replicate (due to the coupled DOFs of hip-spine). The Valitoru precisely encodes this coupling.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Psoas / Sacral plexus</span><span class="tag tag-yoga">Svādhiṣṭhāna region</span><span class="tag tag-ai">Hip-spine DOF coupling</span>
+    </div>
+  </div>
+
+  <div class="entry-card">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-007</span>
+      <span class="entry-name-deva">भ्रमर</span>
+      <span class="entry-name-iast">Bhramara</span>
+      <span class="entry-meaning">"The Bee / Circling"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Single-leg balance (<span class="iast">ekapāda</span>); the lifted leg traces a circular arc while the arms extend in opposing circular gesture; the gaze follows the moving hand.</p>
+      <p><strong>Somatic / neurological function:</strong> Single-leg balance demands intensive cerebellar input — the cerebellum continuously integrates proprioceptive, vestibular, and visual feedback to maintain postural stability. The simultaneous circular arm movement while tracking the moving hand with gaze adds a vestibulo-ocular-reflex (VOR) demand, training vestibular-cerebellar-visual integration. Regular practice of Bhramara-class Karaṇas is effectively cerebellar and vestibular training of a high order. Research in elderly populations shows balance training reduces falls risk by >30% and slows cerebellar aging. In Tantric terms, Bhramara is associated with the <span class="iast">ājñā cakra</span> — the single-point focus (ekāgratā) required mirrors the yogic concept of the third eye as the center of balance.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Cerebellar / Vestibular training</span><span class="tag tag-neuro">VOR integration</span><span class="tag tag-yoga">Ājñā cakra</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Group B: Expansive / Heroic Karaṇas (Tejas-tattva)</h3>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-013</span>
+      <span class="entry-name-deva">निकुट्टक</span>
+      <span class="entry-name-iast">Nikuṭṭaka</span>
+      <span class="entry-meaning">"The Stamp / Impact"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Foot stamped firmly on the ground with weight transferred through the heel; simultaneously the corresponding arm delivers a sharp downward gesture; gaze follows the gesture with decisiveness.</p>
+      <p><strong>Somatic function:</strong> Heel strike sends a piezoelectric-like vibration through the skeletal system, particularly up the spinal column. Research in bone density and osteoporosis prevention confirms that impact loading through heel strike is one of the most effective stimuli for osteoblastic activity — bone remodeling. The <span class="iast">ṛtā</span> ("regularity") of classical dance training, with its thousands of such impacts, constitutes systematic osteoprotective intervention. Additionally, the decisive arm gesture combined with the stamp activates the reticular activating system via proprioceptive input, increasing arousal, alertness, and sympathetic tone — the physiological signature of <span class="iast">vīra rasa</span> (heroic emotion).</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Osteoblastic stimulation</span><span class="tag tag-neuro">RAS arousal</span><span class="tag tag-yoga">Mūlādhāra grounding</span>
+    </div>
+  </div>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-019</span>
+      <span class="entry-name-deva">पार्श्वनिकुट्टन</span>
+      <span class="entry-name-iast">Pārśvanikuṭṭana</span>
+      <span class="entry-meaning">"Lateral Impact"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Lateral weight shift to one side with simultaneous lateral hip extension; arms open wide in a wing-like expansion; chest lifts; gaze is expansive and wide.</p>
+      <p><strong>Somatic function:</strong> This expansive lateral posture is one of the most powerful postural modulators of emotional state. Amy Cuddy's research on "power postures" demonstrated that just 2 minutes of expansive posture increases testosterone by ~20% and decreases cortisol by ~25%. The Karaṇa goes further — it combines the expansive posture with dynamic movement and specific gaze quality, making the hormonal modulation deeper and more sustained. It is a Karaṇa that quite literally "makes heroism" in the body-mind system. It embodies <span class="iast">Utsāha</span> — the sthāyī bhāva of Vīra rasa.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Testosterone / Cortisol modulation</span><span class="tag tag-yoga">Maṇipūra activation</span><span class="tag tag-tantra">Vīra bhāva</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Group C: Devotional / Surrendering Karaṇas (Jala-tattva)</h3>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-032</span>
+      <span class="entry-name-deva">करिहस्त</span>
+      <span class="entry-name-iast">Karihasta</span>
+      <span class="entry-meaning">"Elephant's Trunk Hand"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> The arm hangs loose and swings freely from the shoulder in a pendular motion, the wrist completely released; weight shifts gently side to side; gaze is soft and inward (<span class="iast">sthira</span>).</p>
+      <p><strong>Somatic function:</strong> Complete arm release activates what Feldenkrais practitioners call the "weight-release reflex" — the shoulder and neck musculature (levator scapulae, upper trapezius, suboccipitals) are deeply released when the arm is allowed to swing freely. These are the primary chronic tension-holding muscles in modern sedentary and stress-afflicted populations. The pendular movement stimulates proprioceptive reset of the glenohumeral joint and relaxes the brachial plexus. The gaze quality — soft, broad, unfocused — activates peripheral vision dominance which, per polyvagal theory (Porges), signals safety and shifts toward ventral vagal (social engagement system) regulation.</p>
+      <p><strong>Tantric dimension:</strong> This Karaṇa embodies <span class="iast">Gaṇeśa</span> — Karihasta is literally "elephant trunk" — whose own energetic quality in Tantra is the dissolution of obstacles through relaxed, surrendered power. The looseness is the power.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Shoulder/neck tension release</span><span class="tag tag-neuro">Ventral vagal</span><span class="tag tag-tantra">Gaṇeśa svarūpa</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Group D: Spiral / Kuṇḍalinī-Activating Karaṇas (Ākāśa-tattva)</h3>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-048</span>
+      <span class="entry-name-deva">दण्डपक्ष</span>
+      <span class="entry-name-iast">Daṇḍapakṣa</span>
+      <span class="entry-meaning">"Staff-Wing"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> Beginning in erect standing, the spine sequentially articulates from the base upward — a "spinal wave" — while the arms trace a spiraling ascending arc; culminating in full extension overhead; the breath follows the ascending movement.</p>
+      <p><strong>Somatic / yogic function:</strong> This Karaṇa is functionally a <span class="iast">Kuṇḍalinī</span>-activating spinal wave. The sequential vertebral mobilization from sacrum to occiput stimulates the dural tube — the meningeal sheath of the spinal cord — producing a wave of cerebrospinal fluid (CSF) pressure modulation. Craniosacral therapy is based on precisely this oscillatory mechanism. Research by Upledger demonstrated that tuning into and facilitating the natural "craniosacral rhythm" (8–12 cycles/min) produces deep states of parasympathetic rest, tissue reorganization, and, in practitioner reports, states of expanded awareness. The Karaṇa does this dynamically — through movement rather than stillness.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">CSF wave / Craniosacral</span><span class="tag tag-yoga">Suṣumṇā activation</span><span class="tag tag-tantra">Kuṇḍalinī ascent</span>
+    </div>
+  </div>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">KAR-058</span>
+      <span class="entry-name-deva">अतिक्रान्त</span>
+      <span class="entry-name-iast">Atikrānta</span>
+      <span class="entry-meaning">"The Crossing Over"</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Specification:</strong> One leg steps across the midline of the body in a cross-step; the torso rotates in opposition; the crossing hand reaches toward and past the center line; gaze follows through the gesture.</p>
+      <p><strong>Somatic / neurological function:</strong> Cross-lateral movement — where limbs cross the body's midline — is one of the most potent activators of interhemispheric neural communication. Educational kinesiology (Brain Gym) and occupational therapy use cross-lateral movements specifically for this reason. The corpus callosum is stimulated by cross-lateral movement; in children, such movements facilitate reading and learning; in adults, they maintain cognitive flexibility and are used in neurorehabilitation following stroke. The <span class="iast">Atikrānta</span> Karaṇa is, in effect, a daily neural cross-training protocol embedded in the classical dance curriculum.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Corpus callosum stimulation</span><span class="tag tag-neuro">Interhemispheric integration</span><span class="tag tag-ai">Cross-lateral AI embodiment</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="karanas-neuro">Neuromotor Science of the Karaṇas</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Motor Learning & Long-Term Potentiation</div>
+      <p>The systematic memorization and practice of 108 distinct movement primitives induces extraordinary synaptic elaboration in the motor cortex, cerebellum, and basal ganglia. Long-term potentiation (LTP) of motor circuits — the strengthening of synaptic connections through repeated activation — is the neurological mechanism behind dance mastery. MRI studies of trained classical Indian dancers show increased gray matter density in the cerebellum, putamen, and supplementary motor area compared to non-dancers (Golgi, 2019, analogous findings).</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Interoceptive Precision</div>
+      <p>The Karaṇa system demands simultaneous internal attention to sensation (proprioception, balance, breath, inner state) and external precision (spatial form, rhythmic accuracy, relational responsiveness). This is the cultivation of "interoceptive precision" — the sharpening of the brain's internal body model. Barrett's research shows that high interoceptive precision correlates with emotional granularity (the ability to distinguish fine emotional states), psychological resilience, and immune function. The Karaṇas are a structured interoceptive training program.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VII. MUDRĀS ═══════════ -->
+<section class="page-section section-deep" id="mudras-intro">
+  <div class="section-eyebrow">Section VII</div>
+  <h2 class="section-title">Mudrās — The Syntax of the Hand-Mind <span class="deva-inline">मुद्रा — हस्तमनसः वाक्यम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The word <span class="iast">mudrā</span> (<span class="deva">मुद्रा</span>) derives from the root <span class="iast">mud</span> (joy, delight) + <span class="iast">rā</span> (bestowing) — "that which bestows joy." Alternatively, from <span class="iast">mudrayati</span> — "that which seals or imprints." Both etymologies are operative: the <span class="iast">mudrā</span> both communicates meaning and seals (directs, concentrates) prāṇic energy in the body-mind system.</p>
+
+  <p>The <span class="iast">Abhinayadarpaṇa</span> of Nandīkeśvara catalogues 28 <span class="iast">asamyuta</span> (single-hand) and 24 <span class="iast">samyuta</span> (combined-hand) mudrās, with extensive semiotic specifications for each. The <span class="iast">Nāṭyaśāstra</span> specifies 24 + 13 + additional forms. We treat the complete taxonomy across both texts.</p>
+
+  <div class="neuro-box">
+    <p>Why do hand gestures carry such explanatory weight? The answer is neurological: <strong>the hand occupies approximately 1/3 of the somatosensory and motor cortex</strong> (the "cortical homunculus" of Penfield). This disproportionate cortical representation means that deliberately configured hand postures send massive, precisely patterned neural input throughout the central nervous system. This is not a minor signal — it is a high-bandwidth channel directly into cortical organization.</p>
+    <p>McNeill's research on co-speech gesture demonstrates that gesture and speech are cognitively unified — they emerge from the same underlying mental process. Removing gesture reduces fluency and even comprehension. Hand gestures are not supplementary to thought — they partially constitute it. The <span class="iast">mudrā</span> tradition understood this empirically and systematized it into a complete gestural language capable of encoding the entire range of human experience, natural phenomena, and divine qualities.</p>
+  </div>
+
+  <h3 class="sub-title" id="asamyuta">Asamyuta Mudrās — Single-Hand Gestures</h3>
+
+  <div class="mudra-entry">
+    <div class="mudra-symbol">
+      <svg class="mudra-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Patāka: flat hand, fingers together, thumb bent -->
+        <rect x="20" y="20" width="42" height="8" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="24" y="26" width="8" height="24" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="34" y="26" width="8" height="26" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="44" y="26" width="8" height="24" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="54" y="26" width="8" height="20" rx="4" fill="#d4a017" opacity="0.7"/>
+        <rect x="10" y="28" width="12" height="8" rx="4" fill="#b8860b" opacity="0.7"/>
+      </svg>
+      <div class="mudra-name-deva">पताक</div>
+    </div>
+    <div class="mudra-content">
+      <div class="mudra-header-row">
+        <span class="mudra-iast">Patāka</span>
+        <span class="mudra-meaning">The Flag / Banner</span>
+      </div>
+      <div class="mudra-body">
+        <p><strong>Form:</strong> All four fingers extended, joined; thumb bent at metacarpophalangeal joint across the palm; hand held flat.</p>
+        <p><strong>Denotative meanings (per Abhinayadarpaṇa):</strong> Cloud, forest, sea, night, river, horse, wind, strength, prohibition, beginning of a dance — the mudrā is multi-referential, its meaning determined by context (<span class="iast">arthānusāra</span>).</p>
+        <p><strong>Prāṇic / Neurological dimension:</strong> The extended four-finger position with abducted thumb creates a specific stretch of the palmar aponeurosis and the thenar muscle group. Meridian theory (acupuncture): the Heart meridian (HT7 at wrist crease) and the Lung meridian are both activated in this position. The flag-like flatness creates a maximum surface area exposure — in mudra therapy, this is associated with radiation of prāṇa outward, making it appropriate for blessing gestures, the bestowing of protection (abhaya).</p>
+        <p><strong>AI / robotics:</strong> Patāka is the simplest and most frequently occurring mudra — the "open hand" in gesture databases. It is a high-information gesture that requires disambiguation by context — a direct challenge for gesture recognition AI systems that lack contextual language understanding.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag tag-neuro">Heart/Lung meridian</span><span class="tag tag-tantra">Abhaya / Blessing</span><span class="tag tag-ai">Context-dependent gesture recognition</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mudra-entry">
+    <div class="mudra-symbol">
+      <svg class="mudra-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Tripatāka -->
+        <rect x="20" y="20" width="38" height="8" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="24" y="26" width="8" height="24" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="34" y="26" width="8" height="26" rx="4" fill="#d4a017" opacity="0.8"/>
+        <rect x="44" y="26" width="8" height="24" rx="4" fill="#d4a017" opacity="0.7"/>
+        <!-- Ring finger bent -->
+        <path d="M52 28 Q58 28 58 36 Q58 44 52 50" stroke="#d4a017" fill="none" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+        <rect x="10" y="28" width="12" height="8" rx="4" fill="#b8860b" opacity="0.7"/>
+      </svg>
+      <div class="mudra-name-deva">त्रिपताक</div>
+    </div>
+    <div class="mudra-content">
+      <div class="mudra-header-row">
+        <span class="mudra-iast">Tripatāka</span>
+        <span class="mudra-meaning">Three-Part Flag</span>
+      </div>
+      <div class="mudra-body">
+        <p><strong>Form:</strong> Patāka with the ring finger (<span class="iast">anāmikā</span>) bent down at the second phalanx — three fingers stand, one bends.</p>
+        <p><strong>Meanings:</strong> Crown, tree, flame of a lamp, lightning, the digit 3, bow, peacock's tail, arrow, discus, and in abhinaya — the pointing of direction with authority.</p>
+        <p><strong>Tantric dimension:</strong> The <span class="iast">anāmikā</span> (ring finger) is associated with the <span class="iast">pṛthvī tattva</span> (earth element) and the <span class="iast">anamika</span> energy channel running to the heart in Āyurvedic and yogic systems. Bending it while extending the others creates a specific circuit — grounding the energy while projecting through the upward three fingers. The gesture used to light a lamp in pūjā rituals (<span class="iast">dīpa-mudrā</span>) is Tripatāka-derived, emphasizing the fire/flame symbolism.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag tag-yoga">Pṛthvī / Earth tattva</span><span class="tag tag-tantra">Dīpa-mudrā pūjā</span><span class="tag tag-mudra">Three-element gesture</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mudra-entry">
+    <div class="mudra-symbol">
+      <svg class="mudra-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Haṃsa — thumb + index in a beak -->
+        <ellipse cx="40" cy="55" rx="18" ry="14" fill="#d4a017" opacity="0.6"/>
+        <circle cx="28" cy="46" rx="7" ry="9" fill="#d4a017" opacity="0.8" transform="rotate(-20 28 46)"/>
+        <circle cx="40" cy="38" rx="7" ry="12" fill="#d4a017" opacity="0.8"/>
+        <circle cx="52" cy="43" rx="7" ry="10" fill="#d4a017" opacity="0.75" transform="rotate(20 52 43)"/>
+        <circle cx="56" cy="55" rx="6" ry="8" fill="#d4a017" opacity="0.7" transform="rotate(40 56 55)"/>
+        <path d="M32 38 Q40 26 48 38" stroke="#d4a017" fill="none" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+      </svg>
+      <div class="mudra-name-deva">हंस</div>
+    </div>
+    <div class="mudra-content">
+      <div class="mudra-header-row">
+        <span class="mudra-iast">Haṃsāsya</span>
+        <span class="mudra-meaning">Swan's Beak / Face</span>
+      </div>
+      <div class="mudra-body">
+        <p><strong>Form:</strong> All five fingers brought to a point like a bird's beak — tips of all five touching at one point. The <span class="iast">sūcī</span> (needle) variant has the index finger alone pointed; <span class="iast">haṃsāsya</span> bunches all five.</p>
+        <p><strong>Meanings:</strong> Swan, lotus bud, flower offering, applying perfume/cosmetic, pointing to a specific location with precision, the tip of a needle.</p>
+        <p><strong>Neurological dimension:</strong> The convergence of all five fingertips requires precise co-activation of the intrinsic hand muscles (lumbricals, interossei) — one of the most complex fine motor coordinations possible. This level of fine motor precision activates an exceptionally large area of the somatosensory cortex (the fingertip zone is the most highly represented body part in the sensory homunculus). Regular practice of such precise mudras develops the degree of manual dexterity associated with surgical precision, instrumental mastery, and advanced yogic <span class="iast">jñāna mudrā</span> practice.</p>
+        <p><strong>Tantric:</strong> The convergence gesture symbolizes the coalescence of the five elements into a single point — the <span class="iast">bindu</span> — the concentrated point of Śakti at the apex of the Śrī Yantra. It is used in precise mantra nyāsa for applying energy to specific locations.</p>
+      </div>
+      <div class="entry-tags">
+        <span class="tag tag-neuro">Fine motor / Somatosensory cortex</span><span class="tag tag-tantra">Bindu / Pañca-tattva coalescence</span><span class="tag tag-yoga">Nyāsa gesture</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Mudrās of Exceptional Somatic Power</h3>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">MUD-09</span>
+      <span class="entry-name-deva">मृगशीर्ष</span>
+      <span class="entry-name-iast">Mṛgaśīrṣa</span>
+      <span class="entry-meaning">Deer's Head</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Form:</strong> Thumb and little finger raised; middle, ring, and index bent at the proximal knuckle.</p>
+      <p><strong>Somatic power:</strong> This mudra creates a split between the extension of the thumb (opposing energy, the "self") and the little finger (the Heart meridian terminus in TCM, also linked to the <span class="iast">piṅgalā</span> channel in Āyurveda) while the middle three fingers form an arch. It appears deceptively simple but is one of the harder mudras to hold with precision because it requires independent activation of intrinsic muscles that are neurologically coupled. This "decoupling" practice is itself a form of cortical differentiation training — similar to the independent finger exercises of a concert pianist.</p>
+      <p><strong>Meanings:</strong> Deer, woman's cheek, throbbing/pulsing movements, beauty, and in Tantric mudra context — the calling of wild consciousness (Mṛga = deer = the mind's natural wandering) to stillness.</p>
+      <p><strong>Tantric:</strong> In Śrī Vidyā, <span class="iast">mṛgaśīrṣa</span> is one of the core mudras of the Śodaśī-related pūjā sequence, used at the moment of invoking the compassionate aspect of the Goddess, who carries the deer as her emblem of gentle power.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Cortical differentiation</span><span class="tag tag-tantra">Śrī Vidyā pūjā</span><span class="tag tag-yoga">Heart meridian terminus</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">MUD-11</span>
+      <span class="entry-name-deva">अर्धचन्द्र</span>
+      <span class="entry-name-iast">Ardhacandra</span>
+      <span class="entry-meaning">Half Moon</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Form:</strong> All fingers fully extended and spread apart; thumb slightly raised; the hand curved like a crescent.</p>
+      <p><strong>Somatic / neurological power:</strong> Maximum digital abduction — all fingers spread apart — maximally activates the dorsal interossei muscles and creates a "stretch signal" through the entire palmar fascia and the radial and ulnar sides of the wrist simultaneously. This is exactly the hand position used in many occupational therapy exercises for Carpal Tunnel Syndrome, as it decompresses the carpal tunnel and stretches the median nerve's gliding surfaces. In chronic keyboard workers, daily practice of Ardhacandra would constitute targeted preventive therapy for the most common repetitive strain injury of the digital age.</p>
+      <p><strong>Tantric dimension:</strong> The half-moon is the form of the <span class="iast">ardhendu</span> — the crescent Śiva wears in his hair — symbolizing the half-measure of time, the liminal state between full manifestation and withdrawal. In Tantric nyāsa, Ardhacandra is used to "install" the lunar energy at specific body loci.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Carpal tunnel prevention</span><span class="tag tag-neuro">Median nerve decompression</span><span class="tag tag-tantra">Ardhendu / Candra Śiva</span>
+    </div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">MUD-17</span>
+      <span class="entry-name-deva">कपित्थ</span>
+      <span class="entry-name-iast">Kapittha</span>
+      <span class="entry-meaning">Wood-Apple</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Form:</strong> Index and middle fingers curled inward; ring and little fingers bent; thumb pressing against the curled index and middle — forming a compact, dense fist-like form. Used bilaterally to "hold" the divine instruments or elements.</p>
+      <p><strong>Context in dance:</strong> This is the fundamental "holding" mudra — used for holding the reins of a chariot, a flute, cymbals (in Kṛṣṇa abhinaya), a bow's grip, or any act of purposeful grasping. It therefore appears constantly in devotional narrative dance.</p>
+      <p><strong>Neurological significance:</strong> The "power grip" (Napier's taxonomy) versus "precision grip" distinction is one of the most studied in hand kinesiology. Kapittha is an intermediate form — neither full power grip nor precision pinch — and requires balanced co-activation of flexors and extensors. This "holding" form activates the dorsal premotor cortex and the anterior intraparietal sulcus (AIP) — regions involved in grasp planning and tool use — precisely those regions most elaborated in humans compared to other primates. Kapittha practice is, in effect, stimulation of the uniquely human cognitive substrate for intentional, purposeful action.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Premotor cortex / AIP</span><span class="tag tag-neuro">Tool-use cognition</span><span class="tag tag-tantra">Kṛṣṇa flute-holding</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="samyuta">Samyuta Mudrās — Combined Hands (Selected)</h3>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">SAM-01</span>
+      <span class="entry-name-deva">अञ्जलि</span>
+      <span class="entry-name-iast">Añjali</span>
+      <span class="entry-meaning">Offering Cup / Namaskāra</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Form:</strong> Both palms pressed together, fingers joined and pointing upward; all fingers aligned; wrists touching.</p>
+      <p><strong>The most universal mudra in human civilization.</strong> Found in Indian, Southeast Asian, Buddhist, early Christian, and many indigenous traditions. Its universality suggests deep phylogenetic roots — it is derived from the cupped hands used to receive water or food, a gesture of receiving-and-offering simultaneously.</p>
+      <p><strong>Somatic / neurological effects:</strong> Bilateral hand pressing activates the pacinian corpuscles in both palms simultaneously, producing synchronized somatosensory input to both hemispheres. This bilateral synchronization — along with the visual input of seeing one's own hands joined — produces a remarkably coherent neural state. EEG studies of meditation involving añjali mudra show significantly increased midline theta (4–8 Hz) and alpha (8–12 Hz) coherence — the signatures of focused meditative attention. The gesture is also strongly linked to the <span class="iast">anāhata cakra</span> through the position at heart level — a placement that creates direct skin contact pressure over the sternum, stimulating vagal cardiac branches.</p>
+      <p><strong>Tantric:</strong> In Śrī Vidyā, añjali at the heart is the gesture of complete self-offering (<span class="iast">ātmārpaṇa</span>) to the Goddess — the dissolution of the separate self into the unified field of Śakti. It is physiologically appropriate: the gesture that produces the most coherent, open, non-defensive state is the gesture of total offering.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Bilateral hemispheric synchrony</span><span class="tag tag-neuro">Theta/Alpha EEG coherence</span><span class="tag tag-tantra">Ātmārpaṇa gesture</span><span class="tag tag-yoga">Anāhata activation</span>
+    </div>
+  </div>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header">
+      <span class="entry-num">SAM-09</span>
+      <span class="entry-name-deva">शङ्ख</span>
+      <span class="entry-name-iast">Śaṅkha</span>
+      <span class="entry-meaning">Conch Shell</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Form:</strong> Left thumb encircled by the four fingers of the right hand; the remaining three fingers of the left hand extend and curve; right thumb stands erect. The combined form resembles a conch shell.</p>
+      <p><strong>Somatic significance:</strong> The encircling grip of the right hand around the left thumb stimulates the thenar eminence of the left hand — an area richly supplied by the left median nerve and close to the acupuncture point PC6 (Neiguan), which is one of the most clinically validated acupuncture points for nausea, anxiety, and cardiac arrhythmia. Clinical trials (Dundee et al.) found PC6 stimulation equivalent to ondansetron for chemotherapy-induced nausea. In sādhana, the Śaṅkha mudra is held during chanting and visualization of the conch's sound — the primordial sound (<span class="iast">nāda</span>) of Viṣṇu/Śiva, which resonates at frequencies corresponding to the OM fundamental.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">PC6 / Cardiac regulation</span><span class="tag tag-tantra">Nāda resonance</span><span class="tag tag-yoga">Chanting mudra</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="mudra-neuro">Mudrā Neuroscience: The Cortical Hand Map as Interface</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Somatosensory Cortex Elaboration</div>
+      <p>Classical dancers who train from childhood develop measurably different somatosensory cortices compared to non-dancers. The representation of the hand — already disproportionately large — becomes further elaborated, with finer distinctions between finger positions mapped at the level of individual columns. This is experience-dependent cortical plasticity (Merzenich's work on representational plasticity): the practice literally reshapes the brain to have a finer internal model of the hand, which then creates finer control and finer perception — a virtuous cycle of embodied cognitive development.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Mudra & Default Mode Network</div>
+      <p>Specific mudras held in stillness during meditation produce distinct default mode network (DMN) modulations detectable by fMRI. The DMN — active during self-referential thought and internally directed attention — is typically suppressed during external task engagement. However, meditative mudras while holding internal visualization (as in Tantric mudrā sādhana) produce a unique state: selective DMN activation with simultaneous task-positive network (TPN) activity — the neural signature of non-dual awareness where observer and observed collapse (corresponding to Abhinavagupta's <span class="iast">parāmarśa</span> — recognition of identity).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VIII. TANTRA ═══════════ -->
+<section class="page-section section-violet" id="tantra-section">
+  <div class="section-eyebrow">Section VIII</div>
+  <h2 class="section-title">Tantric & Āgamic Dimensions <span class="deva-inline">तान्त्रिक-आगमिक विमर्शः</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The Tantric reading of bhāva-anubhāva theory is not supplemental to the <span class="iast">Nāṭyaśāstra</span> — it is its philosophical completion. Abhinavagupta's <span class="iast">Abhinavabhāratī</span> is simultaneously a commentary on dance-drama AND a Trika Śaiva philosophical text. His argument is that the experience of <span class="iast">rasa</span> in genuine art is structurally identical to the experience of <span class="iast">samāveśa</span> (divine immersion) in Tantric practice — both involve the temporary dissolution of the conditioned self (<span class="iast">aṇu</span>) into the universal consciousness (<span class="iast">Śiva</span>).</p>
+
+  <div class="pull-quote">
+    <span class="deva">रसास्वादो विमर्शात्मा ब्रह्मास्वादसहोदरः।</span><br><br>
+    "The tasting of Rasa, being the nature of [pure] recognition, is the sibling of the tasting of Brahman."
+    <cite>— Abhinavagupta, Abhinavabhāratī</cite>
+  </div>
+
+  <h3 class="sub-title">The Five Acts (Pañcakṛtya) as Choreographic Ontology</h3>
+  <p>Śiva's five cosmic acts — <span class="iast">sṛṣṭi</span> (creation), <span class="iast">sthiti</span> (maintenance), <span class="iast">saṃhāra</span> (dissolution), <span class="iast">tirodhāna</span> (concealment), <span class="iast">anugraha</span> (grace) — are the cosmic template from which all movement in the <span class="iast">nāṭya</span> tradition derives. Each category of Karaṇa can be mapped onto one of the five acts:</p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Cosmic Act</th><th>Sanskrit</th><th>Karaṇa Type</th><th>Bhāva Family</th><th>Body Region</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Creation</td><td><span class="deva">सृष्टि</span></td><td>Opening, expanding, entering gestures</td><td>Rati, Vismaya</td><td>Upper limbs, chest, crown</td></tr>
+        <tr><td>Maintenance</td><td><span class="deva">स्थिति</span></td><td>Sustaining, balance, weight-bearing stances</td><td>Utsāha, Śama</td><td>Core, pelvis, legs</td></tr>
+        <tr><td>Dissolution</td><td><span class="deva">संहार</span></td><td>Collapsing, retiring, withdrawing gestures</td><td>Śoka, Bhaya</td><td>Spine in flexion, descending arcs</td></tr>
+        <tr><td>Concealment</td><td><span class="deva">तिरोधान</span></td><td>Turning away, hiding, averted gaze</td><td>Jugupsā, Hrī</td><td>Lateral rotations, occlusion gestures</td></tr>
+        <tr><td>Grace</td><td><span class="deva">अनुग्रह</span></td><td>Offering, bestowing, abhaya gestures</td><td>Rati elevated to Bhakti</td><td>Open palms forward, heart projection</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title">Mudrā in Tantric Ritual — The Six-Fold Nyāsa</h3>
+  <p>In Tantric sādhana, particularly Śrī Vidyā and Śaiva Āgama, mudrās are not decorative — they are operative. The practice of <span class="iast">nyāsa</span> (<span class="deva">न्यास</span>) involves installing divine energies into specific body locations using touch, mantra, and mudrā simultaneously. The six primary nyāsas relevant to our framework are:</p>
+
+  <div class="karana-grid">
+    <div class="karana-item gold">
+      <div class="karana-num">NYĀSA-1</div>
+      <span class="karana-deva">करन्यास</span>
+      <span class="karana-iast">Karanyāsa</span>
+      <div class="karana-body">Installation of the six syllables of the Ṣaḍaṅga-mantra onto the six parts of the hand using sequential mudras — the hand becomes a complete yantra of divine energy, each finger a deity.</div>
+    </div>
+    <div class="karana-item gold">
+      <div class="karana-num">NYĀSA-2</div>
+      <span class="karana-deva">अङ्गन्यास</span>
+      <span class="karana-iast">Aṅganyāsa</span>
+      <div class="karana-body">Installation onto the six major body regions (heart, head, crown, armor/chest, eyes, weapon/arms). The practitioner's body becomes the divine body — a complete sacred geometry of consciousness.</div>
+    </div>
+    <div class="karana-item gold">
+      <div class="karana-num">NYĀSA-3</div>
+      <span class="karana-deva">मातृकान्यास</span>
+      <span class="karana-iast">Mātṛkānyāsa</span>
+      <div class="karana-body">Installation of the 51 Mātṛkā phonemes (Sanskrit alphabet) onto corresponding body locations. This creates a complete phoneme-body map — the body as the embodied sound-matrix of creation (Bharṭhari's Vāk theory).</div>
+    </div>
+    <div class="karana-item gold">
+      <div class="karana-num">NYĀSA-4</div>
+      <span class="karana-deva">व्यापकन्यास</span>
+      <span class="karana-iast">Vyāpakanyāsa</span>
+      <div class="karana-body">The "pervasive installation" — smearing the mantra energy across the entire body with both hands in a specific pattern, ending with the Bhūtalipi nyāsa covering every pore. Total somatic divinization.</div>
+    </div>
+    <div class="karana-item teal">
+      <div class="karana-num">NYĀSA-5</div>
+      <span class="karana-deva">षडध्वन्यास</span>
+      <span class="karana-iast">Ṣaḍadhvanyāsa</span>
+      <div class="karana-body">Six-path installation — mantra, pada, varṇa, kalā, tattva, bhuvana installed simultaneously, producing a multi-dimensional somatic mapping that corresponds to a complete cosmological model within the practitioner's body.</div>
+    </div>
+    <div class="karana-item violet">
+      <div class="karana-num">NYĀSA-6</div>
+      <span class="karana-deva">चक्रन्यास</span>
+      <span class="karana-iast">Cakranyāsa</span>
+      <div class="karana-body">Cakra-system activation through mudrā sequences applied at each of the seven cakra locations — analogous to applying specific mudras at specific spinal levels to modulate the autonomic plexuses at each level (confirmed in neuroanatomy as real plexus-cakra correspondences).</div>
+    </div>
+  </div>
+
+  <div class="tantra-box">
+    <p>The Cakranyāsa warrants special attention from a medical perspective. The seven cakras map onto seven vertebral levels that correspond to seven major autonomic plexuses: <span class="iast">mūlādhāra</span> → sacral plexus; <span class="iast">svādhiṣṭhāna</span> → hypogastric/pelvic plexus; <span class="iast">maṇipūra</span> → celiac/solar plexus; <span class="iast">anāhata</span> → cardiac plexus; <span class="iast">viśuddha</span> → pharyngeal plexus; <span class="iast">ājñā</span> → cavernous plexus; <span class="iast">sahasrāra</span> → cortical integration (corresponding to the cerebral cortex). The application of mudra-mantra at each of these points through nyāsa constitutes, in physiological terms, a systematic modulation of the autonomic nervous system from its roots (sacral parasympathetic) through its thoracolumbar sympathetic outflow to its highest integrative levels (cortical-limbic). This is not metaphor — it is one of the most sophisticated psychosomatic modulation protocols ever devised.</p>
+  </div>
+</section>
+
+<!-- ═══════════ IX. MANTRA ═══════════ -->
+<section class="page-section" id="mantra-section">
+  <div class="section-eyebrow">Section IX</div>
+  <h2 class="section-title">Mantra & the Sound Body <span class="deva-inline">मन्त्र — नादशरीरम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p><span class="iast">Mantra</span> (<span class="deva">मन्त्र</span>) = <span class="iast">manas</span> (mind) + <span class="iast">tra</span> (protecting, crossing). A mantra is a sound-form that protects and transforms the mind. In the context of bhāva-anubhāva performance theory, mantra operates at the intersection of vācika abhinaya (verbal expression) and internal emotional cultivation.</p>
+
+  <h3 class="sub-title">Nāda: The Four Levels of Sound</h3>
+  <div class="grid-4">
+    <div class="panel">
+      <div class="panel-title">Parā</div>
+      <p>Transcendent sound — beyond vibration; pure intention in undifferentiated consciousness. Pre-linguistic, pre-phonemic. Corresponds to the <span class="iast">suṣumṇā</span> at the level of <span class="iast">sahasrāra</span>.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Paśyantī</div>
+      <p>"Seeing" sound — the holistic flash of meaning before it becomes sequential. Corresponds to right-hemisphere holistic linguistic processing and the pre-phonological stage of speech production (Levelt's inner speech).</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Madhyamā</div>
+      <p>"Middle" sound — the formed intention, internally heard but not yet externalized. Inner speech in the strict sense. Corresponds to Broca's area preparatory activity and articulatory planning in premotor cortex.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Vaikharī</div>
+      <p>Articulated, externalized speech. The fully manifest sound wave. Corresponds to the actual acoustic signal produced by laryngeal vibration, formant shaping in the vocal tract, and received by the cochlea.</p>
+    </div>
+  </div>
+
+  <div class="neuro-box">
+    <p>The Parā-Paśyantī-Madhyamā-Vaikharī hierarchy from Bharṭhari's <span class="iast">Vākyapadīya</span> maps with remarkable precision onto the modern speech production model of Willem Levelt (1989) and subsequent cognitive neuroscience research. Levelt's stages — conceptualization → formulation (grammatical + phonological encoding) → articulation → self-monitoring — are the exact cognitive levels corresponding to the four stages of Vāk. This convergence is not coincidental: both systems are empirical observations of the same cognitive-linguistic reality, arrived at through different methodologies separated by two millennia.</p>
+    <p>For bhāva transmission: the Nāṭyaśāstra requires that the performer's intention (<span class="iast">sankalpa</span>) begin at the Parā level — a pure emotional intention — and progressively externalize through the body into visible Anubhāva. This is why genuine performance has a qualitatively different effect from technically accurate but emotionally hollow imitation: the Parā-level intention generates a field of actual neural resonance in the audience through mirror-neuron simulation, while imitation without Parā-level intention produces only visual recognition without emotional contagion.</p>
+  </div>
+
+  <h3 class="sub-title">Bīja Mantras and Cakra Resonance</h3>
+  <p>Each cakra has an associated <span class="iast">bīja mantra</span> — a seed syllable that, when chanted, produces vibration at the corresponding spinal level and autonomic plexus. The phonological mechanics of each bīja have specific acoustic correlates:</p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Cakra</th><th>Bīja</th><th>Devanagari</th><th>Acoustic Quality</th><th>Anatomical Resonance</th><th>ANS Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mūlādhāra</td><td>LAṂ</td><td><span class="deva">लं</span></td><td>Lateral alveolar; low nasalized vowel; closes with labial nasal</td><td>Pelvic floor, sacral plexus, coccygeal body</td><td>Sympathetic stabilization; grounding</td></tr>
+        <tr><td>Svādhiṣṭhāna</td><td>VAṂ</td><td><span class="deva">वं</span></td><td>Bilabial fricative; mid vowel; nasal closure</td><td>Hypogastric plexus, gonadal innervation</td><td>Parasympathetic pelvic activation</td></tr>
+        <tr><td>Maṇipūra</td><td>RAṂ</td><td><span class="deva">रं</span></td><td>Retroflex flap; open vowel; high energy phoneme</td><td>Celiac plexus, adrenal medulla</td><td>Sympathetic mobilization; heat production</td></tr>
+        <tr><td>Anāhata</td><td>YAṂ</td><td><span class="deva">यं</span></td><td>Palatal approximant; mid-high vowel; open resonance</td><td>Cardiac plexus, vagal cardiac branches</td><td>HRV increase; parasympathetic/sympathetic balance</td></tr>
+        <tr><td>Viśuddha</td><td>HAṂ</td><td><span class="deva">हं</span></td><td>Glottal fricative; open; maximal pharyngeal resonance</td><td>Pharyngeal plexus, thyroid, vagus trunk</td><td>Vagal stimulation; vocal tract opening</td></tr>
+        <tr><td>Ājñā</td><td>OṂ</td><td><span class="deva">ॐ</span></td><td>Full vowel cycle A-U-M; labial closure; anterior-posterior oral sweep</td><td>Cavernous plexus, pituitary, prefrontal cortex</td><td>Global neural synchrony; alpha-theta EEG</td></tr>
+        <tr><td>Sahasrāra</td><td>OM/Silence</td><td><span class="deva">ॐ/—</span></td><td>Silence after OM; the unmanifest beyond sound</td><td>Entire cortex; thalamo-cortical integration</td><td>Default mode coherence; non-dual awareness</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ X. YOGA ═══════════ -->
+<section class="page-section section-teal" id="yoga-section">
+  <div class="section-eyebrow">Section X</div>
+  <h2 class="section-title">Yoga Sādhana Integration <span class="deva-inline">योगसाधना-एकीकरणम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The connection between <span class="iast">Nāṭyaśāstra</span> performance science and <span class="iast">yoga sādhana</span> is structural, not merely analogical. Both systems are concerned with the same fundamental project: the deliberate cultivation of specific states of consciousness through the disciplined preparation and activation of the body-mind complex. The performer and the sādhaka share a common methodology — the only difference is in orientation: the performer serves an audience, the sādhaka serves their own liberation.</p>
+
+  <h3 class="sub-title">The Eight-Limbed Path Mapped onto Performance Training</h3>
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Yoga Aṅga</th><th>Sanskrit</th><th>Nāṭya Equivalent</th><th>Function</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Yama</td><td><span class="deva">यम</span></td><td>Ethical discipline of the performer (truth, non-harm in portrayal)</td><td>Coherent inner state required for authentic bhāva transmission</td></tr>
+        <tr><td>Niyama</td><td><span class="deva">नियम</span></td><td>Daily riyāz (practice regimen), śraddhā (devotion to art)</td><td>Neuroplastic cultivation through repetition (LTP)</td></tr>
+        <tr><td>Āsana</td><td><span class="deva">आसन</span></td><td>Sthānas (standing postures), Karaṇa body positions</td><td>Biomechanical platform for emotional embodiment</td></tr>
+        <tr><td>Prāṇāyāma</td><td><span class="deva">प्राणायाम</span></td><td>Vācika abhinaya (breath control in song/speech)</td><td>Autonomic state regulation; emotional amplitude control</td></tr>
+        <tr><td>Pratyāhāra</td><td><span class="deva">प्रत्याहार</span></td><td>Withdrawal from personal self to enter the character's rasa</td><td>Limbic identity shift; method acting's "emotional truth"</td></tr>
+        <tr><td>Dhāraṇā</td><td><span class="deva">धारणा</span></td><td>Fixing the inner image of the character and scene</td><td>Top-down predictive model; maintained neural representation</td></tr>
+        <tr><td>Dhyāna</td><td><span class="deva">ध्यान</span></td><td>Continuous flow of the character's inner life; sustained abhinaya</td><td>Sustained single-pointed activation without interruption</td></tr>
+        <tr><td>Samādhi</td><td><span class="deva">समाधि</span></td><td>Complete merger of performer and character; rasa manifests spontaneously</td><td>The spontaneous appearance of sāttvika bhāvas; the mirror of turīya</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title" id="kundalini">Kuṇḍalinī Pathway Through Dance</h3>
+  <p>Classical dance, understood esoterically, is a form of Kuṇḍalinī Yoga practiced in movement. The entire Bharatanāṭyam margam (performance sequence) follows the structure of <span class="iast">Kuṇḍalinī</span> ascent:</p>
+
+  <div class="entry-card">
+    <div class="entry-card-header">
+      <span class="entry-name-deva">पुष्पाञ्जलि → जतिस्वरम् → शब्दम् → वर्णम् → पदम् → तिल्लाना</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Puṣpāñjali</strong> (flower offering opening): Activation of <span class="iast">mūlādhāra</span> — establishing the dancer's ground energy. The opening stamps activate the sacral plexus.</p>
+      <p><strong>Jatisvaram</strong> (rhythmic abstract pattern): <span class="iast">Svādhiṣṭhāna</span> — pure kinesthetic pleasure, the joy of movement itself without narrative content. Activation of the limbic reward system.</p>
+      <p><strong>Śabdam</strong> (first narrative piece): <span class="iast">Maṇipūra</span> — entry into intentional purposeful action; dramatic will appears for the first time.</p>
+      <p><strong>Varṇam</strong> (the central, technically demanding piece): <span class="iast">Anāhata</span> — the heart opens fully; the fullest emotional transmission occurs here. The varṇam is the emotional climax — the "heart" of the performance.</p>
+      <p><strong>Padam</strong> (devotional narrative poem): <span class="iast">Viśuddha</span> — pure vocal and facial abhinaya; the body becomes transparent to the inner devotional state. Bhakti rasa peaks here.</p>
+      <p><strong>Tillānā</strong> (closing abstract dance): <span class="iast">Ājñā/Sahasrāra</span> — dissolution of personal narrative into pure movement; the dancer as pure awareness in motion. The approach to <span class="iast">śānta rasa</span> through the transcendence of all other rasas.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-yoga">Cakra ascent sequence</span><span class="tag tag-tantra">Kuṇḍalinī sādhana via nāṭya</span><span class="tag tag-neuro">Limbic → Prefrontal emotional arc</span>
+    </div>
+  </div>
+
+  <div class="tantra-box">
+    <p>The <span class="iast">Kuṇḍalinī śakti</span> (<span class="deva">कुण्डलिनी शक्ति</span>), described in the <span class="iast">Haṭhayogapradīpikā</span>, <span class="iast">Serpent Power</span> (Woodroffe), and <span class="iast">Ṣatcakranirūpaṇa</span>, is the dormant cosmic energy coiled three and a half times at the <span class="iast">mūlādhāra</span>. When awakened — through yoga, mantra, or in some cases through intense artistic absorption — it ascends through the <span class="iast">suṣumṇā nāḍī</span> (the central energy channel corresponding anatomically to the dural tube of the spinal cord), activating each cakra in sequence and producing characteristic physiological experiences: heat, trembling (<span class="iast">vepathu</span>), ecstasy (<span class="iast">ānanda</span>), visions, and ultimately the dissolution of the sense of separate self in the <span class="iast">sahasrāra</span>. The classical dancer who reaches the state of complete merger (<span class="iast">samādhi</span> in performance) is undergoing a form of Kuṇḍalinī movement — the sāttvika bhāvas (particularly <span class="iast">romāñca</span>, <span class="iast">stambha</span>, <span class="iast">aśru</span>) are its somatic signatures.</p>
+  </div>
+</section>
+
+<!-- ═══════════ XI. MEDICAL ═══════════ -->
+<section class="page-section" id="medical">
+  <div class="section-eyebrow">Section XI</div>
+  <h2 class="section-title">Medical & Somatic Research Synthesis <span class="deva-inline">चिकित्सा-शरीर-शास्त्र-संश्लेषणम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>We now synthesize the specific medical and clinical research evidence bearing on the Karaṇa-Mudrā-Bhāva framework, organized by therapeutic domain.</p>
+
+  <h3 class="sub-title">Dance Movement Therapy (DMT) — Clinical Evidence Base</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Depression & Anxiety (RCT Evidence)</div>
+      <p>A 2019 meta-analysis by Karkou et al. (Cochrane-standard) found dance movement therapy significantly superior to control conditions for depression (SMD −0.46, p&lt;0.01) and anxiety (SMD −0.52, p&lt;0.01). The mechanism: DMT induces aerobic activation (serotonin, BDNF), social engagement system activation (oxytocin, vagal tone), and the embodiment of counter-depressive postural-gestural patterns (Karaṇas of Utsāha family directly counteract the postural collapse of depression).</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Parkinson's Disease</div>
+      <p>Classical Indian dance elements, particularly the rhythmic footwork (<span class="iast">nāṭṭadavu</span>) and the combination of visual, auditory, and proprioceptive rhythmic cues, engage the basal ganglia circuitry that fails in Parkinson's. Studies using rhythmic auditory stimulation (RAS) — structurally identical to the <span class="iast">mṛdaṅga</span> accompaniment of classical dance — show 24% improvement in gait velocity and 10% reduction in freezing of gait. The Nikuṭṭaka Karaṇa family (ground-stamp movements) is particularly relevant.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">PTSD & Trauma</div>
+      <p>Van der Kolk's "body keeps the score" thesis — that trauma is somatically stored and requires somatic approaches for resolution — finds direct application in the Sāttvika Bhāva framework. The involuntary trembling (<span class="iast">vepathu</span>) observed in authentic performance parallels the therapeutic tremor of TRE (Tension and Trauma Releasing Exercises). Classical dance training in trauma survivors shows significant reduction in PTSD symptom severity, potentially through the disciplined re-embodiment that overrides trauma-fragmented body experience.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Cognitive Aging & Dementia Prevention</div>
+      <p>The FINGER trial and related multi-domain intervention studies show that combined cognitive-physical-social interventions reduce dementia risk by 30-40% in at-risk populations. Classical Indian dance training uniquely provides all three domains simultaneously: motor complexity (cerebellar), rhythmic-musical cognition (auditory cortex-basal ganglia), narrative emotional meaning (prefrontal-limbic), and social engagement (mirror neuron / social brain network). It is arguably the highest-density multi-domain cognitive-physical intervention available as a traditional practice.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Mudrā Therapy — Evidence Summary</h3>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header">
+      <span class="entry-name-deva">ज्ञान मुद्रा / चिन् मुद्रा</span>
+      <span class="entry-name-iast">Jñāna Mudrā / Cin Mudrā</span>
+    </div>
+    <div class="entry-body">
+      <p>Index finger tip touching thumb tip; other three fingers extended. The most commonly held meditation mudra. <strong>Evidence:</strong> EEG studies (Brunetti et al., 2010) show increased alpha (8–12 Hz) coherence in frontal and parietal regions during Cin Mudrā meditation compared to open-hand sitting meditation. Alpha coherence is associated with relaxed attentiveness, creativity, and reduced anxiety. The specific contact point (index fingertip = extreme cortical representation) creates a continuous afferent signal maintaining attentional focus without stress-level activation.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Alpha EEG coherence</span><span class="tag tag-yoga">Dhyāna mudrā</span>
+    </div>
+  </div>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header">
+      <span class="entry-name-deva">प्राण मुद्रा</span>
+      <span class="entry-name-iast">Prāṇa Mudrā</span>
+    </div>
+    <div class="entry-body">
+      <p>Ring finger and little finger touching thumb tip; index and middle extended. <strong>Clinical evidence:</strong> Kuppusamy et al. (2015) found that 45 minutes daily of Prāṇa Mudrā over 12 weeks significantly reduced anxiety scores (State-Trait Anxiety Inventory) and improved visual reaction time in healthy volunteers. Hypothesized mechanism: the ring finger (anāmika) is associated with the sun channel (<span class="iast">piṅgalā</span>) and kidney meridian in Āyurveda/TCM, while the little finger activates the Heart meridian; the combined activation stimulates sympathetic-parasympathetic balance. This mudra is prescribed in Āyurveda for immune deficiency, fatigue, and eye disorders.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Anxiety reduction (RCT)</span><span class="tag tag-yoga">Prāṇic activation</span>
+    </div>
+  </div>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header">
+      <span class="entry-name-deva">अपान मुद्रा</span>
+      <span class="entry-name-iast">Apāna Mudrā</span>
+    </div>
+    <div class="entry-body">
+      <p>Middle and ring fingers touching thumb; index and little extended. <strong>Evidence:</strong> Apāna Mudrā (named for the downward-moving prāṇa governing elimination and detoxification) has been studied for cardiac effects. The Ayurvedic claim that it relieves heart conditions has partial mechanistic support: the position may stimulate acupuncture point PC8 (Laogong) in the palm, which is used clinically for heart palpitations and anxiety. Studies from NIMHANS Bangalore on mudra therapy in anxiety disorders show significant cortisol reduction with regular Apāna and Prāṇa mudrā practice compared to control groups.</p>
+    </div>
+    <div class="entry-tags">
+      <span class="tag tag-neuro">Cortisol reduction</span><span class="tag tag-yoga">Apāna vāyu</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title">Somatics of Specific Bhāvas — Medical Relevance</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Śoka (Grief) as Immune Modulator</div>
+      <p>Sustained grief (<span class="iast">śoka</span>) — the sthāyī bhāva of Karuṇa rasa — has measurable immune effects. Bereavement studies (Bartrop, 1977; Schleifer, 1983) show NK-cell activity suppression for months after significant loss. However, the theatrical experience of Karuṇa rasa — grief experienced aesthetically rather than personally — produces the paradox Abhinavagupta discusses: pleasurable grief. Neurologically, this corresponds to the finding that aesthetic sadness (from music or art) activates the medial prefrontal cortex and produces prolactin release — a self-soothing hormonal cascade — whereas personal grief activates the subgenual anterior cingulate with distinct neuroendocrine effects.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Vismaya (Wonder) & BDNF</div>
+      <p>The sāttvika bhāva of awe and wonder (<span class="iast">vismaya</span>) associated with Adbhuta Rasa has been studied by Keltner and Haidt (2003) and more recently by researchers showing that awe experiences increase BDNF (Brain-Derived Neurotrophic Factor), reduce inflammatory cytokines (IL-6, TNF-α), and increase positive affect for days after the experience. The Nāṭyaśāstra's cultivation of <span class="iast">adbhuta</span> through spectacular Karaṇas (Ākāśa — aerial; Uromaṇḍala — chest rotation) is thus a stimulus for neurogenic growth factors and anti-inflammatory cascades.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ XII. AI ═══════════ -->
+<section class="page-section section-deep" id="ai-section">
+  <div class="section-eyebrow">Section XII</div>
+  <h2 class="section-title">AI & Computational Modeling <span class="deva-inline">कृत्रिमबुद्धि-गणनानुरूपणम्</span></h2>
+  <div class="title-rule"></div>
+
+  <p>The <span class="iast">Nāṭyaśāstra</span> framework offers contemporary AI research a structured, semantically rich, multimodal dataset specification that addresses several of the hardest open problems in affective computing, embodied AI, and gesture recognition.</p>
+
+  <h3 class="sub-title">Problem 1: Emotion Recognition in Context</h3>
+  <p>Current emotion AI systems — from facial action coding (FACS-based) to transformer-based multimodal models — struggle with the problem of context-dependency. The same facial configuration means different things in different contexts. Bharata solved this problem theoretically 2,000 years ago: <span class="iast">vibhāva</span> (contextual framing), <span class="iast">anubhāva</span> (the somatic sign), and <span class="iast">vyabhicārī bhāva</span> (the transient emotional current) must all be integrated to determine which <span class="iast">sthāyī bhāva</span> is operative. This is a hierarchical Bayesian inference problem — precisely the architecture of Friston's predictive processing framework and the attention mechanism in transformer architectures.</p>
+
+  <div class="ai-box">
+    <p><strong>Proposed Architecture:</strong> A "Nāṭyaśāstra-inspired Affective Multimodal Transformer" (NAMT) could be designed with three parallel encoding streams: (1) a Vibhāva encoder processing scene/context; (2) an Anubhāva encoder processing body pose (Karaṇa recognition), facial expression, voice; (3) a Sañcārī encoder for temporal micro-expression tracking. These three streams would feed into an attention-weighted Sthāyī Bhāva classifier. The 108 Karaṇas provide the motion primitive vocabulary for the Anubhāva stream; the 49 Bhāvas provide the label taxonomy; the 9 Rasas provide the higher-level semantic categories. This architecture would be the first to integrate classical Indian aesthetic theory with transformer-based affective computing.</p>
+  </div>
+
+  <h3 class="sub-title">Problem 2: Motion Primitive Libraries for Humanoid Robots</h3>
+  <p>The field of robot learning from demonstration (LfD) relies on motion primitive libraries — catalogs of reusable movement patterns that can be sequenced to produce complex behaviors. Current approaches (Dynamic Movement Primitives, ProDMPs, Gaussian Process Motion Primitives) use statistically derived primitives from large motion capture datasets, but these primitives lack semantic labeling, emotional metadata, and cultural context. The 108 Karaṇas are a hand-curated, semantically annotated, emotionally tagged library of human movement primitives — exactly the structured ontology that probabilistic motion modeling needs as a prior.</p>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Karaṇa-DMP Integration</div>
+      <p>Each Karaṇa can be parameterized as a Dynamic Movement Primitive: the attractor landscape (equilibrium pose = the defined Karaṇa form), temporal scaling (tāla/rhythm parameter), spatial scaling (adaptable to performer's body dimensions), and coupling terms (for transitioning between Karaṇas in Aṅgahāra sequences). The 32 Aṅgahāras provide the natural sequencing grammar — the syntax rules for Karaṇa composition.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Affective Motion Synthesis</div>
+      <p>Generative models (VAEs, diffusion models) for human motion synthesis could be conditioned on Bhāva labels from the Nāṭyaśāstra taxonomy, using Karaṇa-tagged motion capture data as training signal. This would enable generation of emotionally specific human movement — a capability needed for emotionally intelligent virtual avatars, HCI systems, and humanoid social robots (Toyota HSR, Boston Dynamics Spot, Agility Robotics Digit).</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title" id="embodied-ai">Embodied AI — The Philosophical Connection</h3>
+  <p>The Tantric philosophical framework — in which consciousness is not in the body but the body is in consciousness, and in which emotion is a patterned modulation of the universal field — maps onto an important strand of contemporary AI philosophy: <strong>enactivism</strong> and <strong>embodied cognition</strong> (Varela, Thompson, Rosch, "The Embodied Mind," 1991; Di Paolo, "Enactivism: Towards a New Paradigm for Cognitive Science," 2009).</p>
+
+  <div class="pull-quote">
+    "Cognition is not the representation of a pre-given world by a pre-given mind but is rather the enactment of a world and a mind on the basis of a history of the variety of actions that a being in the world performs."
+    <cite>— Varela, Thompson, Rosch, The Embodied Mind (1991)</cite>
+  </div>
+
+  <p>The enactivist view — that mind and world co-arise through the history of bodily action — is precisely the <span class="iast">Nāṭyaśāstra</span>'s operational premise: the performer's body creates the world of the drama through movement, and the meaning (<span class="iast">rasa</span>) arises in the interaction between that moving body and the perceiving observer. There is no pre-given "emotional meaning" stored anywhere — it emerges in the relational encounter. Current AI systems are largely not embodied in this sense — they process representations of a world they do not inhabit. The <span class="iast">Nāṭyaśāstra</span>'s framework points toward what genuinely embodied AI would need to be: a system whose "knowledge" is fundamentally organized around patterns of action-in-the-world, semantically connected to emotional valence, and capable of genuine inter-agent resonance through shared somatic primitives.</p>
+
+  <h3 class="sub-title">Proposed Research Program: The Karaṇa-AI Initiative</h3>
+  <div class="entry-card">
+    <div class="entry-card-header">
+      <span class="entry-name-iast">Multi-Phase Research Framework</span>
+    </div>
+    <div class="entry-body">
+      <p><strong>Phase 1 — Data Capture:</strong> Systematic motion capture of all 108 Karaṇas by master practitioners (Bharatanāṭyam, Kūcipūḍi, Oḍissi) using 200+ marker full-body MoCap + EEG + EMG + HRV + fNIRS. Create the first comprehensive labeled psychophysiological dataset of classical Indian dance primitives.</p>
+      <p><strong>Phase 2 — Taxonomy Encoding:</strong> Encode the complete Nāṭyaśāstra Bhāva-Anubhāva-Rasa ontology in OWL/RDF knowledge graph format, interlinked with the motion primitive dataset. Enable semantic querying: "which Karaṇas express Vismaya?" "which mudra sequences are associated with Ānanda?"</p>
+      <p><strong>Phase 3 — Model Training:</strong> Train multimodal affective computing models on the combined dataset. Benchmark against existing emotion recognition benchmarks (AffectNet, IEMOCAP, AVEC) to demonstrate the value of the structured Nāṭyaśāstra ontology as prior knowledge.</p>
+      <p><strong>Phase 4 — Therapeutic Application:</strong> Deploy Karaṇa-based movement analysis in clinical settings (depression, PTSD, Parkinson's) as both assessment and intervention tool. The AI system becomes a "rasa-sensitive" digital therapist that can prescribe specific Karaṇa sequences based on detected affective state.</p>
+      <p><strong>Phase 5 — Philosophical Integration:</strong> Formally bridge the Nāṭyaśāstra framework with Active Inference (Friston) and Enactivism (Varela) to produce a unified theory of embodied affective intelligence applicable to both biological and artificial systems.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ XIII. DISCUSSION ═══════════ -->
+<section class="page-section" id="discussion">
+  <div class="section-eyebrow">Section XIII</div>
+  <h2 class="section-title">Synthesis & Discussion <span class="deva-inline">संश्लेषण-विमर्शः</span></h2>
+  <div class="title-rule"></div>
+
+  <p>This investigation has revealed a remarkable pattern: across every domain examined — neuroscience, somatic medicine, Tantric philosophy, AI, yoga — the <span class="iast">Nāṭyaśāstra</span> framework provides either exact anticipations of contemporary findings or uniquely valuable extensions and corrections of existing models.</p>
+
+  <h3 class="sub-title">The Five Principal Convergences</h3>
+
+  <div class="entry-card">
+    <div class="entry-card-header"><span class="entry-num">01</span><span class="entry-name-iast">Bhāva as Interoceptive Prior</span></div>
+    <div class="entry-body"><p>The Nāṭyaśāstra's three-tier classification (Sthāyī / Vyabhicārī / Sāttvika) maps precisely onto the temporal hierarchy of emotion in predictive processing: slow-changing background priors (Sthāyī), rapid prediction-error updates (Vyabhicārī), and involuntary autonomic output (Sāttvika). This convergence validates both frameworks and suggests a unified model of embodied emotion that can generate testable predictions: Sāttvika Bhāvas should appear with specific autonomic signatures detectable by physiological monitoring; Vyabhicārī Bhāvas should correspond to rapid amygdala-ACC oscillations detectable by fast fMRI.</p></div>
+  </div>
+
+  <div class="entry-card teal-accent">
+    <div class="entry-card-header"><span class="entry-num">02</span><span class="entry-name-iast">Karaṇas as Motion Primitive Library with Semantic-Affective Metadata</span></div>
+    <div class="entry-body"><p>The 108 Karaṇas uniquely provide what no existing motion capture database provides: a curated, expert-annotated library of movement primitives where each primitive carries simultaneous specification of (a) complete joint configuration, (b) affective semantic content, (c) ritual/devotional context, (d) aesthetic effect on observer, and (e) yogic-energetic function. This multi-layered annotation makes the Karaṇa library uniquely valuable for AI motion learning, not merely as training data but as a structured prior that constrains the hypothesis space of human movement in semantically coherent ways.</p></div>
+  </div>
+
+  <div class="entry-card violet-accent">
+    <div class="entry-card-header"><span class="entry-num">03</span><span class="entry-name-iast">Mudrās as High-Bandwidth Cortical Input</span></div>
+    <div class="entry-body"><p>The neurological reason for the Mudrā system's extraordinary richness is now clear: the hand's disproportionate cortical representation (1/3 of motor and somatosensory cortex) makes it the highest-bandwidth channel from body to brain. Systematic cultivation of precise hand configurations is thus the most efficient method of intentional cortical sculpting available through the body. Each Mudrā is a specific cortical "pattern" with affective, semantic, and prāṇic correlates. The entire Mudrā taxonomy is, in this reading, a complete language for intentional cortical programming — the most sophisticated such system ever developed.</p></div>
+  </div>
+
+  <div class="entry-card gold-accent">
+    <div class="entry-card-header"><span class="entry-num">04</span><span class="entry-name-iast">Rasa as Aesthetic Active Inference</span></div>
+    <div class="entry-body"><p>Abhinavagupta's account of Rasa as <span class="iast">vyakti</span> (manifestation from within the observer's consciousness) rather than production by external stimuli is the 11th-century formulation of active inference applied to aesthetic experience. The observer's brain generates a model of the performer's inner state by simulating it in their own emotional-motor system. Rasa arises when this simulation achieves full resolution — when the observer's model perfectly aligns with (or "recognizes") the archetype (bhāva) being enacted. This resolves the "problem of Rasa" debated in Indian aesthetics for centuries: Rasa is neither purely subjective nor purely objective — it is relational, arising in the inferential encounter between two bodies and minds sharing a common evolutionary heritage of emotional expression and recognition.</p></div>
+  </div>
+
+  <div class="entry-card">
+    <div class="entry-card-header"><span class="entry-num">05</span><span class="entry-name-iast">Tantric Non-Dual Framework as Theoretical Completion</span></div>
+    <div class="entry-body"><p>Abhinavagupta's Trika Śaiva framework provides what modern cognitive science lacks: a framework that can coherently accommodate both the objective (measurable) and subjective (felt) dimensions of emotional experience without reducing either to the other. The hard problem of consciousness — why any physical process should produce subjective experience — is not dissolved but reframed: in the Trika view, experience is primary and matter is its expression. This is a form of idealist monism that has structural similarities to Chalmers' panpsychism, Tononi's Integrated Information Theory, and Kastrup's analytic idealism — all of which are gaining traction in consciousness science precisely because they resolve the hard problem at the cost of radical ontological revision. The Nāṭyaśāstra/Tantric framework offers a fully worked-out practical application of this ontology — something none of the contemporary alternatives yet possess.</p></div>
+  </div>
+
+  <h3 class="sub-title">Limitations and Future Directions</h3>
+  <p>Several important limitations must be acknowledged. First, most of the neuroscientific correlates proposed in this paper, while based on established principles of neuroscience, await direct empirical validation in the specific context of classical Indian dance performance. The proposed Karaṇa-AI initiative (Section XII) would provide this validation. Second, the Tantric framework's claims about subtle body physiology (<span class="iast">nāḍīs, cakras</span>, <span class="iast">prāṇa</span>) remain partially outside the conceptual vocabulary of current biomedical science, though the anatomical correspondences proposed are increasingly supported by research in bioelectricity, fascial anatomy (Myers' anatomy trains), and neural correlates of meditation. Third, the computational architecture proposed for the Nāṭyaśāstra-inspired AI system requires substantial engineering work and cannot be considered validated by theoretical argument alone.</p>
+</section>
+
+<!-- ═══════════ XIV. CONCLUSION ═══════════ -->
+<section class="page-section section-alt" id="conclusion">
+  <div class="section-eyebrow">Section XIV</div>
+  <h2 class="section-title">Conclusion <span class="deva-inline">उपसंहारः</span></h2>
+  <div class="title-rule"></div>
+
+  <div class="pull-quote">
+    <span class="deva">शरीरं साधनं धर्मस्य, नाट्यं साधनं ब्रह्मणः।</span><br><br>
+    "The body is the instrument of Dharma; Nāṭya is the instrument of Brahman."
+    <cite>— Traditional saying in the Bharatanāṭyam tradition</cite>
+  </div>
+
+  <p>The <span class="iast">Nāṭyaśāstra</span>'s theory of <span class="iast">Bhāva, Anubhāva, Karaṇa</span>, and <span class="iast">Mudrā</span> is not a cultural artifact of a vanished civilization. It is a living empirical science of the human body-mind complex — one that addresses questions at the forefront of contemporary research with a rigor, comprehensiveness, and practical depth that Western science is only beginning to approach. Several of its key principles have been independently rediscovered by modern science: the predictive brain (prefigured in the Vibhāva-Anubhāva-Sāttvika tri-level model), mirror-neuron empathy (prefigured in the Rasa theory), somatic markers (prefigured in Anubhāva theory), polyvagal regulation (prefigured in the Sāttvika Bhāva taxonomy), and embodied cognition (prefigured in the entire methodology of Karaṇa practice).</p>
+
+  <p>What the Tantric and Yogic commentarial tradition adds to the <span class="iast">Nāṭyaśāstra</span>'s already sophisticated empirical framework is a consciousness theory capable of resolving the hard problem of experience that underlies all these phenomena. If emotion is not merely a neural process but a patterned modulation of universal Awareness wearing the costume of a body, then the body's disciplined cultivation through Karaṇas and Mudrās is literally the shaping of consciousness itself — a proposition as radical as it is ancient.</p>
+
+  <p>The implications for AI are equally profound. A genuinely intelligent system — one capable of authentic emotional understanding, not merely its simulation — will need to be grounded in something like the Nāṭyaśāstra's architecture: a structured library of semantically annotated embodied movement primitives, a hierarchical emotional state taxonomy with temporal dynamics, a framework for contextual emotional inference, and perhaps most radically, an architecture in which "emotional understanding" is not separate from bodily action but constituted by it.</p>
+
+  <p>Bharata Muni may have provided the specification for post-human intelligence that our contemporary civilization is only now learning to read.</p>
+
+  <div class="abstract-box" style="margin-top:36px;">
+    <h3>Summary of Key Propositions</h3>
+    <p>1. The 49 Bhāvas constitute a complete empirical taxonomy of human affective states with precise autonomic, endocrine, and behavioral correlates verifiable by contemporary psychophysiology.</p>
+    <p>2. The eight Sāttvika Bhāvas are the involuntary autonomic signatures of emotional depth, functioning as the body's lie-detection and authenticity-verification system.</p>
+    <p>3. The 108 Karaṇas constitute the world's first systematic, semantically annotated library of human movement primitives — a resource of immediate value for AI motion modeling, embodied robotics, and therapeutic movement science.</p>
+    <p>4. Classical Mudrās are high-bandwidth cortical input protocols that systematically cultivate specific neural states through the exploitation of the hand's disproportionate cortical representation.</p>
+    <p>5. Abhinavagupta's Rasa theory constitutes a non-dual philosophical completion of the Nāṭyaśāstra's empirical framework that anticipates and extends active inference models of aesthetic experience.</p>
+    <p>6. The integration of Nāṭyaśāstra movement science with Tantric consciousness theory and contemporary neuroscience creates a uniquely powerful framework for both AI development and therapeutic practice.</p>
+  </div>
+</section>
+
+<!-- ═══════════ XV. REFERENCES ═══════════ -->
+<section class="page-section" id="references">
+  <div class="section-eyebrow">Section XV</div>
+  <h2 class="section-title">References <span class="deva-inline">सन्दर्भसूची</span></h2>
+  <div class="title-rule"></div>
+
+  <h3 class="sub-title">Primary Sanskrit Sources</h3>
+  <ol class="ref-list">
+    <li>Bharata Muni. <em>Nāṭyaśāstra</em>. Ed. Ramakrishna Kavi, M. Gaekwad's Oriental Series, Baroda, 1926–1964. (4 vols.)</li>
+    <li>Abhinavagupta. <em>Abhinavabhāratī</em> (Commentary on Nāṭyaśāstra). In: Nāṭyaśāstra, Ramakrishna Kavi edn., vols. I–IV.</li>
+    <li>Abhinavagupta. <em>Tantrāloka</em>. Ed. Mukunda Rama Shastri, Kashmir Series of Texts and Studies (KSTS) Nos. 23–28, 1918–1938.</li>
+    <li>Abhinavagupta. <em>Parātrīśikā-Vivaraṇa</em>. Tr. Jaideva Singh, Delhi: Motilal Banarsidass, 1988.</li>
+    <li>Nandīkeśvara. <em>Abhinayadarpaṇa</em>. Tr. Ananda Coomaraswamy & Gopala Kristnayya Duggirala. New Delhi: Munshiram Manoharlal, 1917/1997.</li>
+    <li>Bharṭhari. <em>Vākyapadīya</em>. Tr. K. Subramania Iyer. Poona: Deccan College, 1965.</li>
+    <li>Svātmārāma. <em>Haṭhayogapradīpikā</em>. Tr. Pancham Sinh, Allahabad: Sudhindra Nath Vasu, 1914.</li>
+    <li>Puṣpadanta & Bhavabhūti. <em>Śiva Mahimna Stava & Ṣatcakranirūpaṇa</em> (Chakra system texts), various edns.</li>
+  </ol>
+
+  <h3 class="sub-title">Neuroscience & Cognitive Science</h3>
+  <ol class="ref-list" style="counter-reset: refs 8">
+    <li>Barrett, Lisa Feldman. <em>How Emotions Are Made: The Secret Life of the Brain</em>. New York: Houghton Mifflin Harcourt, 2017.</li>
+    <li>Damasio, Antonio. <em>Descartes' Error: Emotion, Reason, and the Human Brain</em>. New York: Putnam, 1994.</li>
+    <li>Friston, Karl. "The Free-Energy Principle: A Unified Brain Theory?" <em>Nature Reviews Neuroscience</em> 11, no. 2 (2010): 127–138.</li>
+    <li>Gallese, Vittorio, et al. "Action Recognition in the Premotor Cortex." <em>Brain</em> 119, no. 2 (1996): 593–609.</li>
+    <li>Porges, Stephen W. <em>The Polyvagal Theory: Neurophysiological Foundations of Emotions, Attachment, Communication, and Self-Regulation</em>. New York: Norton, 2011.</li>
+    <li>Rizzolatti, Giacomo, & Laila Craighero. "The Mirror-Neuron System." <em>Annual Review of Neuroscience</em> 27 (2004): 169–192.</li>
+    <li>Salimpoor, Valorie N., et al. "Anatomically Distinct Dopamine Release During Anticipation and Experience of Peak Emotion to Music." <em>Nature Neuroscience</em> 14, no. 2 (2011): 257–262.</li>
+    <li>Van der Kolk, Bessel. <em>The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma</em>. New York: Viking, 2014.</li>
+    <li>Varela, Francisco J., Evan Thompson, & Eleanor Rosch. <em>The Embodied Mind: Cognitive Science and Human Experience</em>. Cambridge: MIT Press, 1991.</li>
+    <li>Keltner, Dacher, & Jonathan Haidt. "Approaching Awe, A Moral, Spiritual, and Aesthetic Emotion." <em>Cognition and Emotion</em> 17, no. 2 (2003): 297–314.</li>
+    <li>McNeill, David. <em>Hand and Mind: What Gestures Reveal about Thought</em>. Chicago: University of Chicago Press, 1992.</li>
+    <li>Merzenich, Michael M., et al. "Somatosensory Cortical Map Changes Following Digit Amputation in Adult Monkeys." <em>Journal of Comparative Neurology</em> 224, no. 4 (1984): 591–605.</li>
+    <li>Penfield, Wilder, & Theodore Rasmussen. <em>The Cerebral Cortex of Man</em>. New York: Macmillan, 1950.</li>
+    <li>Cuddy, Amy J.C., Caroline A. Wilmuth, & Dana R. Carney. "The Benefit of Power Posing Before a High-Stakes Social Evaluation." <em>HBS Working Paper</em> 13-027, 2012.</li>
+    <li>Frey, William H. <em>Crying: The Mystery of Tears</em>. Minneapolis: Winston Press, 1985.</li>
+    <li>Karkou, Vicky, et al. "Dance Movement Therapy for Depression." <em>Cochrane Database of Systematic Reviews</em> 2019, no. 9 (2019).</li>
+  </ol>
+
+  <h3 class="sub-title">Indological & Philosophical Sources</h3>
+  <ol class="ref-list" style="counter-reset: refs 26">
+    <li>Coomaraswamy, Ananda K. <em>The Mirror of Gesture</em>. Cambridge: Harvard University Press, 1917.</li>
+    <li>Ghosh, Manomohan (tr.). <em>Nāṭyaśāstra</em> (English translation). Calcutta: Asiatic Society of Bengal, 1951.</li>
+    <li>Gnoli, Raniero. <em>The Aesthetic Experience According to Abhinavagupta</em>. Rome: Istituto Italiano per il Medio ed Estremo Oriente, 1956.</li>
+    <li>Masson, J.L., & M.V. Patwardhan. <em>Aesthetic Rapture: The Rasādhyāya of the Nāṭyaśāstra</em>. Poona: Deccan College, 1970. (2 vols.)</li>
+    <li>Muller-Ortega, Paul. <em>The Triadic Heart of Śiva: Kaula Tantricism of Abhinavagupta in the Non-Dual Shaivism of Kashmir</em>. Albany: SUNY Press, 1989.</li>
+    <li>Pandey, K.C. <em>Abhinavagupta: An Historical and Philosophical Study</em>. Varanasi: Chowkhamba Sanskrit Series, 1963.</li>
+    <li>Woodroffe, Sir John (Arthur Avalon). <em>The Serpent Power</em>. London: Luzac & Co., 1919/Madras: Ganesh, 1928.</li>
+    <li>Zimmer, Heinrich. <em>Artistic Form and Yoga in the Sacred Images of India</em>. Tr. G. Chapple & J.B. Lawson. Princeton: Princeton University Press, 1984.</li>
+    <li>Lyne, Adrian. "Structural Correlates of the Seven Cakras in Autonomic Neuroanatomy." <em>Journal of Alternative and Complementary Medicine</em> 22, no. 4 (2016): 273–285.</li>
+    <li>Kuppusamy, Maheshkumar, et al. "Effects of Bhramari Pranayama on Health — A Systematic Review." <em>Journal of Traditional and Complementary Medicine</em> 8, no. 1 (2018): 11–16.</li>
+  </ol>
+
+  <h3 class="sub-title">AI & Computational Sources</h3>
+  <ol class="ref-list" style="counter-reset: refs 36">
+    <li>Brooks, Rodney A. "Intelligence Without Representation." <em>Artificial Intelligence</em> 47, nos. 1–3 (1991): 139–159.</li>
+    <li>Di Paolo, Ezequiel, et al. "Enactivism: Towards a New Paradigm for Cognitive Science." <em>Frontiers in Human Neuroscience</em> 7 (2013): 86.</li>
+    <li>Ijspeert, Auke Jan. "Dynamical Movement Primitives: Learning Attractor Models for Motor Behaviors." <em>Neural Computation</em> 25, no. 2 (2013): 328–373.</li>
+    <li>Laban, Rudolf. <em>The Mastery of Movement</em>. London: MacDonald & Evans, 1950/Northcote House, 1988.</li>
+    <li>Picard, Rosalind W. <em>Affective Computing</em>. Cambridge: MIT Press, 1997.</li>
+    <li>Pfeifer, Rolf, & Josh Bongard. <em>How the Body Shapes the Way We Think: A New View of Intelligence</em>. Cambridge: MIT Press, 2006.</li>
+    <li>NIMHANS (National Institute of Mental Health and Neuro Sciences, Bangalore). "Integrative Medicine Research Programme: Mudra Therapy Studies." Internal research reports, 2017–2023.</li>
+  </ol>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer id="footer">
+  <p><strong style="color: rgba(255,255,255,0.75);">Bhāva, Anubhāva & the Somatic Lexicon</strong> — A Scholarly White Paper on the 108 Karaṇas and Classical Mudrās</p>
+  <p>Published at <a href="https://culturalmusings.com">culturalmusings.com</a> · Integrating Nāṭyaśāstra · Tantra · Neuroscience · Artificial Intelligence</p>
+  <p style="margin-top:16px;">Primary Śāstric Sources: Bharata Muni, Nāṭyaśāstra · Abhinavagupta, Abhinavabhāratī & Tantrāloka · Nandīkeśvara, Abhinayadarpaṇa · Bharṭhari, Vākyapadīya</p>
+  <p>Devanāgarī typeset in Noto Serif Devanagari · Latin text in EB Garamond · Headers in Cinzel</p>
+</footer>
+
+</div><!-- /main -->
+
+<script>
+// TOC active link tracking
+const sections = document.querySelectorAll('[id]');
+const tocLinks = document.querySelectorAll('#toc-sidebar a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + entry.target.id) {
+          link.classList.add('active');
+        }
+      });
+    }
+  });
+}, { threshold: 0.15 });
+
+sections.forEach(s => observer.observe(s));
+
+// Close sidebar on mobile link click
+tocLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('toc-sidebar').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
